@@ -1,0 +1,91 @@
+#ifndef _LEDS_H
+#define _LEDS_H
+
+
+
+#define LED_00_PORT PORTC
+#define LED_01_PORT PORTD
+#define LED_02_PORT PORTB
+#define LED_03_PORT PORTB
+#define LED_04_PORT PORTC
+#define LED_05_PORT PORTC
+#define LED_06_PORT PORTB
+#define LED_07_PORT PORTD
+#define LED_08_PORT PORTC
+#define LED_09_PORT PORTD
+#define LED_10_PORT PORTB
+#define LED_11_PORT PORTB
+#define LED_12_PORT PORTD
+#define LED_13_PORT PORTC
+#define LED_14_PORT PORTB
+#define LED_15_PORT PORTD
+#define LED_16_PORT PORTC
+#define LED_17_PORT PORTB
+#define LED_18_PORT PORTD
+#define LED_19_PORT PORTB
+
+#define LED_00_PIN PORTC6
+#define LED_01_PIN PORTD3
+#define LED_02_PIN PORTB5
+#define LED_03_PIN PORTB2
+#define LED_04_PIN PORTC4
+#define LED_05_PIN PORTC1
+#define LED_06_PIN PORTB7
+#define LED_07_PIN PORTD6
+#define LED_08_PIN PORTC3
+#define LED_09_PIN PORTD4
+#define LED_10_PIN PORTB4
+#define LED_11_PIN PORTB1
+#define LED_12_PIN PORTD2
+#define LED_13_PIN PORTC0
+#define LED_14_PIN PORTB3
+#define LED_15_PIN PORTD7
+#define LED_16_PIN PORTC2
+#define LED_17_PIN PORTB6
+#define LED_18_PIN PORTD5
+#define LED_19_PIN PORTB0
+
+#define LED_00_ON LED_00_PORT &= ~(1<<LED_00_PIN)
+#define LED_01_ON LED_01_PORT &= ~(1<<LED_01_PIN)
+#define LED_02_ON LED_02_PORT &= ~(1<<LED_02_PIN)
+#define LED_03_ON LED_03_PORT &= ~(1<<LED_03_PIN)
+#define LED_04_ON LED_04_PORT &= ~(1<<LED_04_PIN)
+#define LED_05_ON LED_05_PORT &= ~(1<<LED_05_PIN)
+#define LED_06_ON LED_06_PORT &= ~(1<<LED_06_PIN)
+#define LED_07_ON LED_07_PORT &= ~(1<<LED_07_PIN)
+#define LED_08_ON LED_08_PORT &= ~(1<<LED_08_PIN)
+#define LED_09_ON LED_09_PORT &= ~(1<<LED_09_PIN)
+#define LED_10_ON LED_10_PORT &= ~(1<<LED_10_PIN)
+#define LED_11_ON LED_11_PORT &= ~(1<<LED_11_PIN)
+#define LED_12_ON LED_12_PORT &= ~(1<<LED_12_PIN)
+#define LED_13_ON LED_13_PORT &= ~(1<<LED_13_PIN)
+#define LED_14_ON LED_14_PORT &= ~(1<<LED_14_PIN)
+#define LED_15_ON LED_15_PORT &= ~(1<<LED_15_PIN)
+#define LED_16_ON LED_16_PORT &= ~(1<<LED_16_PIN)
+#define LED_17_ON LED_17_PORT &= ~(1<<LED_17_PIN)
+#define LED_18_ON LED_18_PORT &= ~(1<<LED_18_PIN)
+#define LED_19_ON LED_19_PORT &= ~(1<<LED_19_PIN)
+
+#define LED_00_OFF LED_00_PORT |= (1<<LED_00_PIN)
+#define LED_01_OFF LED_01_PORT |= (1<<LED_01_PIN)
+#define LED_02_OFF LED_02_PORT |= (1<<LED_02_PIN)
+#define LED_03_OFF LED_03_PORT |= (1<<LED_03_PIN)
+#define LED_04_OFF LED_04_PORT |= (1<<LED_04_PIN)
+#define LED_05_OFF LED_05_PORT |= (1<<LED_05_PIN)
+#define LED_06_OFF LED_06_PORT |= (1<<LED_06_PIN)
+#define LED_07_OFF LED_07_PORT |= (1<<LED_07_PIN)
+#define LED_08_OFF LED_08_PORT |= (1<<LED_08_PIN)
+#define LED_09_OFF LED_09_PORT |= (1<<LED_09_PIN)
+#define LED_10_OFF LED_10_PORT |= (1<<LED_10_PIN)
+#define LED_11_OFF LED_11_PORT |= (1<<LED_11_PIN)
+#define LED_12_OFF LED_12_PORT |= (1<<LED_12_PIN)
+#define LED_13_OFF LED_13_PORT |= (1<<LED_13_PIN)
+#define LED_14_OFF LED_14_PORT |= (1<<LED_14_PIN)
+#define LED_15_OFF LED_15_PORT |= (1<<LED_15_PIN)
+#define LED_16_OFF LED_16_PORT |= (1<<LED_16_PIN)
+#define LED_17_OFF LED_17_PORT |= (1<<LED_17_PIN)
+#define LED_18_OFF LED_18_PORT |= (1<<LED_18_PIN)
+#define LED_19_OFF LED_19_PORT |= (1<<LED_19_PIN)
+
+
+#endif
