@@ -12,15 +12,15 @@
 int leds[LED_HEIGHT][LED_WIDTH];
 int interval;
 
-void setTickInterval(int t) {
+void setTickInterval(uint16_t t) {
 	assert(t > 0);
 	interval = 1000000 / (244 >> t);
 }
 
-void setLedXY(int x, int y, int b) {
-	assert(x >= 0 && x < LED_WIDTH);
-	assert(y >= 0 && y < LED_HEIGHT);
-	assert(b >= 0 && b < 4);
+void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
+	assert(x < LED_WIDTH);
+	assert(y < LED_HEIGHT);
+	assert(b < 4);
 	leds[y][x] = b;
 }
 
