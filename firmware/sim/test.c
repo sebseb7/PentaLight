@@ -1,13 +1,29 @@
 #include "main.h"
 
 
-void init() {
-	setTickInterval(4);
-}
-
 
 int8_t m = 0;
 int8_t d = 1;
+
+
+void tick(void);
+
+#if defined(__AVR__)
+void init(void) __attribute__ ((naked, used, section (".init8")));
+#warning compiling for AVR
+#else
+void init(void) __attribute__((constructor));
+#warning compiling for SIM
+#endif
+
+void init(void)
+{
+    void (*fp)(void);
+	fp=tick;
+        
+	registerAnimation(fp,4);
+}
+            
 
 
 void tick() {

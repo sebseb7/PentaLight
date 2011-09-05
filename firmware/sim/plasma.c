@@ -21,7 +21,15 @@ static uint8_t sqrti(uint8_t x) {
 }
 
 void plasma_tick(void);
+
+#if defined(__AVR__)
 void init(void) __attribute__ ((naked, used, section (".init8")));
+#warning compiling for AVR
+#else
+void init(void) __attribute__((constructor));
+#warning compiling for SIM
+#endif
+
 void init(void)
 {
 	void (*fp)(void);

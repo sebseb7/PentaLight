@@ -103,10 +103,24 @@ const uint8_t text_len = 26;
 
 uint16_t pos = 0;
 
-void init() {
-	setTickInterval(4);
-}
+void tick(void);
 
+#if defined(__AVR__)
+void init(void) __attribute__ ((naked, used, section (".init8")));
+#warning compiling for AVR
+#else
+void init(void) __attribute__((constructor));
+#warning compiling for SIM
+#endif
+
+void init(void)
+{
+    void (*fp)(void);
+	fp=tick;
+        
+	registerAnimation(fp,4);
+}
+            
 void tick() {
 	uint8_t x, y;
 
