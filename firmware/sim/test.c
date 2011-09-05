@@ -6,18 +6,20 @@ void init() {
 }
 
 
-int m = 0;
-int c = 0;
-int d = 1;
+int8_t m = 0;
+int8_t c = 0;
+int8_t d = 1;
 
 
 void tick() {
-	int x;
+	int8_t x;
+	// clear
 	for(x = 0; x < LED_WIDTH * LED_HEIGHT; x++) setLedXY(x & 3, x >> 2, 0);
 
 	m += d;
 	if(m < 1 || m == LED_HEIGHT - 1) d = -d;
 
+	// draw row
 	for(x = 0; x < LED_WIDTH; x++) setLedXY(x, m, 3);
 }
 

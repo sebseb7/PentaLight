@@ -17,7 +17,6 @@ uint8_t adc_timeout = 0;
 uint8_t tick_timeout = 0;
 uint8_t volatile tick_interval = 18;
 uint8_t volatile call_tick = 0;
-uint8_t volatile start_adc  =0;
 
 uint16_t volatile off_period = 500;
 
@@ -56,17 +55,6 @@ ISR (TIMER0_OVF_vect)
 
 ISR(ADC_vect)
 {
-	if(start_adc==0)
-	{
-	//	setLed(4,3);
-		start_adc=1;
-	}
-	else
-	{
-	//	setLed(4,0);
-		start_adc=0;
-	}
-	
 	uint16_t new_off_period = 500;
 	if(ADC < 978)
 	{
@@ -258,6 +246,35 @@ ISR (PCINT2_vect)
 	AppPtr_t AppStartPtr = (AppPtr_t)0x1800;
 	AppStartPtr();
 }
+
+void myinit(void) __attribute__ ((constructor, used));
+
+void myinit (void)
+{
+   	DDRB = 0;
+}
+
+void myinit2(void) __attribute__ ((constructor, used));
+
+void myinit2 (void)
+{
+   	DDRB = 0;
+}
+
+void code_init8(void) __attribute__ ((naked, used, section (".init8")));
+
+
+/* !!! never call this function !!! */
+
+void code_init8 (void)
+{
+   
+   	DDRB = 0;
+   	DDRB = 0;
+   /* Code */
+   
+}
+   
 
 int main (void)
 {

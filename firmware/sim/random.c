@@ -9,7 +9,7 @@
 
 
 void init() {
-	setTickInterval(2);
+	setTickInterval(4);
 }
 
 void tick() {
