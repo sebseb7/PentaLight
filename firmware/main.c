@@ -21,6 +21,8 @@ uint8_t volatile start_adc  =0;
 
 uint16_t volatile off_period = 500;
 
+typedef void (*AppPtr_t)(void) __attribute__ ((noreturn));
+
 
 void tick(void);
 
@@ -250,6 +252,11 @@ ISR (TIMER1_OVF_vect)
 }
 ISR (PCINT2_vect)
 {
+	// for now we jump to the bootloader when any button is pressed
+	GPIOR2=255;
+	PRR = 0;
+	AppPtr_t AppStartPtr = (AppPtr_t)0x1800;
+	AppStartPtr();
 }
 
 int main (void)
@@ -257,11 +264,11 @@ int main (void)
 
 	//enable LED channels as output
 	PORTB |= (1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2)|(1<<PORTB3)|(1<<PORTB4)|(1<<PORTB5)|(1<<PORTB6)|(1<<PORTB7);
-	PORTC |= (1<<PORTC0)|(1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3)|(1<<PORTC4);
+	PORTC |= (1<<PORTC0)|(1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3)|(1<<PORTC4)|(1<<PORTC6);
 	PORTD |= (1<<PORTD2)|(1<<PORTD3)|(1<<PORTD4)|(1<<PORTD5)|(1<<PORTD6)|(1<<PORTD7);
 	
 	DDRB |= (1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2)|(1<<PORTB3)|(1<<PORTB4)|(1<<PORTB5)|(1<<PORTB6)|(1<<PORTB7);
-	DDRC |= (1<<PORTC0)|(1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3)|(1<<PORTC4);//C6 is reset, C5 is ADC, c7 is not available
+	DDRC |= (1<<PORTC0)|(1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3)|(1<<PORTC4)|(1<<PORTC6);//C6 is reset, C5 is ADC, c7 is not available
 	DDRD |= (1<<PORTD2)|(1<<PORTD3)|(1<<PORTD4)|(1<<PORTD5)|(1<<PORTD6)|(1<<PORTD7);// d0 is RX, d1 is TX
 
 
@@ -304,7 +311,6 @@ int main (void)
 
 	sei();
 
-
 	while(1)
 	{
 		if(call_tick == 1)
@@ -313,7 +319,7 @@ int main (void)
 			tick();
 		}
 		
-		volatile asm("sleep");
+//		volatile asm("sleep");
 	}
 }
 
