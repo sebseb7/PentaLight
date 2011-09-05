@@ -10,8 +10,15 @@ static int sini(int x) {
 	if(x & 64) ret = -ret;
 	return ret;
 }
-static inline int cosi(int x) { return sini(x + 32); }
+static int cosi(int x) { return sini(x + 32); }
 
+static uint8_t sqrti(uint8_t x) {
+	static const uint8_t table[32] = {
+	0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+	5, 5, 5, 5, 5, 5, 5 };
+//	assert(x < 32);
+	return table[x];
+}
 
 void init() {
 	setTickInterval(2);
@@ -35,7 +42,7 @@ void tick() {
 
 			int dx = x - rx;
 			int dy = y - ry;
-			int d = sqrt(dx * dx + dy * dy);
+			int d = sqrti(dx * dx + dy * dy);
 
 			int q = (
 						(sini(x * 8 + (v1)) +

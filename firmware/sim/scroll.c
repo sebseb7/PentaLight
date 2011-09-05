@@ -1,5 +1,5 @@
 #include "sim.h"
-const unsigned char font[][3] = {
+const uint8_t font[][3] = {
 	{0x00,0x00,0x00}, //  
 	{0x00,0x1D,0x00}, // !
 	{0x18,0x00,0x18}, // "
@@ -99,22 +99,22 @@ const unsigned char font[][3] = {
 
 char text[] = " Hi there, little bitches! ";
 //char text[] = " HI THERE, LITTLE BITCHES! ";
-const int text_len = 26;
+const uint8_t text_len = 26;
 
-int pos = 0;
+uint16_t pos = 0;
 
 void init() {
 	setTickInterval(4);
 }
 
 void tick() {
-	int x, y;
+	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {
-		int p = pos + x;
+		uint16_t p = pos + x;
 		char c = text[p >> 2];
 
-		unsigned char bits = 0;
+		uint8_t bits = 0;
 		if((p & 3) < 3) bits = font[c - 32][p & 3];
 
 		for(y = 0; y < LED_HEIGHT; y++) {
@@ -125,6 +125,5 @@ void tick() {
 
 	if(pos++ == text_len << 2) pos = 0;
 }
-
 
 
