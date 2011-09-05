@@ -1,4 +1,12 @@
+#if defined(__AVR__)
+#include "../main.h"
+void init_plasma(void) __attribute__ ((naked, used, section (".init8")));
+#warning compiling for AVR
+#else
 #include "main.h"
+void init_plasma(void) __attribute__((constructor));
+#warning compiling for SIM
+#endif
 
 static short sini(char x) {
 	static const char table[] = {
@@ -22,15 +30,8 @@ static uint8_t sqrti(uint8_t x) {
 
 void plasma_tick(void);
 
-#if defined(__AVR__)
-void init(void) __attribute__ ((naked, used, section (".init8")));
-#warning compiling for AVR
-#else
-void init(void) __attribute__((constructor));
-#warning compiling for SIM
-#endif
 
-void init(void)
+void init_plasma(void)
 {
 	void (*fp)(void);
 	fp=plasma_tick;

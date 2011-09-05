@@ -1,29 +1,31 @@
-#include <stdint.h>
 #include <stdlib.h>
 
-#include "main.h"
-
-void tick(void);
-
 #if defined(__AVR__)
-void init(void) __attribute__ ((naked, used, section (".init8")));
+#include "../main.h"
+void init_random(void) __attribute__ ((naked, used, section (".init8")));
 #warning compiling for AVR
 #else
-void init(void) __attribute__((constructor));
+#include "main.h"
+void init_random(void) __attribute__((constructor));
 #warning compiling for SIM
 #endif
 
-void init(void)
+
+
+void tick_random(void);
+
+
+void init_random(void)
 {
     void (*fp)(void);
-	fp=tick;
+	fp=tick_random;
         
 	registerAnimation(fp,4);
 }
             
 
 
-void tick() {
+void tick_random() {
 	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {

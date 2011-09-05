@@ -1,4 +1,14 @@
+#if defined(__AVR__)
+#include "../main.h"
+void init_scroll(void) __attribute__ ((naked, used, section (".init8")));
+#warning compiling for AVR
+#else
 #include "main.h"
+void init_scroll(void) __attribute__((constructor));
+#warning compiling for SIM
+#endif
+
+
 const uint8_t font[][3] = {
 	{0x00,0x00,0x00}, //  
 	{0x00,0x1D,0x00}, // !
@@ -103,25 +113,18 @@ const uint8_t text_len = 26;
 
 uint16_t pos = 0;
 
-void tick(void);
+void tick_scroll(void);
 
-#if defined(__AVR__)
-void init(void) __attribute__ ((naked, used, section (".init8")));
-#warning compiling for AVR
-#else
-void init(void) __attribute__((constructor));
-#warning compiling for SIM
-#endif
 
-void init(void)
+void init_scroll(void)
 {
     void (*fp)(void);
-	fp=tick;
+	fp=tick_scroll;
         
 	registerAnimation(fp,4);
 }
             
-void tick() {
+void tick_scroll() {
 	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {
