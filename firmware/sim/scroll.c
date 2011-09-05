@@ -117,7 +117,7 @@ void tick_scroll(void);
 
 void init_scroll(void)
 {
-	registerAnimation(tick_scroll,4);
+	registerAnimation(tick_scroll,4,text_len*4);
 }
             
 void tick_scroll() {

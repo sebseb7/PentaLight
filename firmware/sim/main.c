@@ -26,7 +26,7 @@ void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 }
 
 
-void registerAnimation(void (*fp)(void),uint16_t t)
+void registerAnimation(void (*fp)(void),uint16_t t,uint16_t ignore)
 {
     tick_fp = fp;
     

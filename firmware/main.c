@@ -22,10 +22,6 @@ uint16_t volatile off_period = 500;
 
 typedef void (*AppPtr_t)(void) __attribute__ ((noreturn));
 
-
-	uint8_t scroll_state = 0;
-
-
 //0,1,2,5,12,26,58,127
 //0,1,2,4,8,16,32,64
 //0,1,1,1,2,3,3,5,7,9,13,17,24,33,46,63
@@ -245,11 +241,20 @@ ISR (PCINT2_vect)
 	AppStartPtr();
 }
 
-void (*tick_fp)(void);
+void (*tick_fp[10])(void);
+uint16_t interval_count[10];
+uint16_t interval_duration[10];
 
-void registerAnimation(void (*fp)(void),uint16_t tickInterval)
+
+uint8_t animations = 0;
+
+void registerAnimation(void (*fp)(void),uint16_t tickInterval, uint16_t intervals)
 {
-	tick_fp = fp;
+	tick_fp[animations] = fp;
+	interval_count[animations]=intervals;
+	interval_duration[animations]=tickInterval;
+	
+	animations++;
 }
 
 
@@ -307,13 +312,19 @@ int main (void)
 
 	while(1)
 	{
-		if(call_tick == 1)
+		for(uint8_t i =0;i < animations;i++)
 		{
-			call_tick =0;
-			tick_fp();
+			for(uint16_t j=0;j < interval_count[i];)
+			{ 
+				if(call_tick == 1)
+				{
+					call_tick =0;
+					(*tick_fp[i])();
+					j++;
+				}
+				//		volatile asm("sleep");
+			}
 		}
-		
-//		volatile asm("sleep");
 	}
 }
 

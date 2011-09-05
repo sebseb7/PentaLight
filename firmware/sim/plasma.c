@@ -32,7 +32,7 @@ void plasma_tick(void);
 
 void init_plasma(void)
 {
-	registerAnimation(plasma_tick,2);
+	registerAnimation(plasma_tick,2,40);
 }
            
            
