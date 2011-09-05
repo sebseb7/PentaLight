@@ -28,7 +28,7 @@ static uint8_t sqrti(uint8_t x) {
 	return table[x];
 }
 
-void plasma_tick(void);
+uint8_t plasma_tick(void);
 
 void init_plasma(void)
 {
@@ -40,7 +40,7 @@ void init_plasma(void)
 int v1 = 0;
 int v2 = 0;
 
-void plasma_tick() {
+uint8_t plasma_tick() {
 
 	v1 += 3;
 	v2 += 5;
@@ -67,6 +67,8 @@ void plasma_tick() {
 
 		}
 	}
+	return 0;
+	
 }
 
 

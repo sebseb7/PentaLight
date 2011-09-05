@@ -12,7 +12,7 @@ void init_random(void) __attribute__((constructor));
 
 
 
-void tick_random(void);
+uint8_t tick_random(void);
 
 void init_random(void)
 {
@@ -21,7 +21,7 @@ void init_random(void)
             
 
 
-void tick_random() {
+uint8_t tick_random() {
 	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {

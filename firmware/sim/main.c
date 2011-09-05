@@ -12,7 +12,7 @@
 
 int leds[LED_HEIGHT][LED_WIDTH];
 int interval;
-void (*tick_fp)(void);
+uint8_t (*tick_fp)(void);
 
 
 void setTickInterval(uint16_t t) {
@@ -26,7 +26,7 @@ void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 }
 
 
-void registerAnimation(void (*fp)(void),uint16_t t,uint16_t ignore)
+void registerAnimation(uint8_t (*fp)(void),uint16_t t,uint16_t ignore)
 {
     tick_fp = fp;
     

@@ -11,6 +11,6 @@
 void setLed(uint8_t,uint8_t); 			// led_nr , brightness
 void setLedXY(uint8_t,uint8_t,uint8_t); // x , y , brightness
 void scrollLeft(void);
-void registerAnimation(void (*)(void),uint16_t,uint16_t);
+void registerAnimation(uint8_t (*)(void),uint16_t,uint16_t);
 
 #endif

@@ -241,14 +241,14 @@ ISR (PCINT2_vect)
 	AppStartPtr();
 }
 
-void (*tick_fp[10])(void);
+uint8_t (*tick_fp[10])(void);
 uint16_t interval_count[10];
 uint16_t interval_duration[10];
 
 
 uint8_t animations = 0;
 
-void registerAnimation(void (*fp)(void),uint16_t tickInterval, uint16_t intervals)
+void registerAnimation(uint8_t (*fp)(void),uint16_t tickInterval, uint16_t intervals)
 {
 	tick_fp[animations] = fp;
 	interval_count[animations]=intervals;
@@ -314,15 +314,31 @@ int main (void)
 	{
 		for(uint8_t i =0;i < animations;i++)
 		{
-			for(uint16_t j=0;j < interval_count[i];)
-			{ 
-				if(call_tick == 1)
-				{
-					call_tick =0;
-					(*tick_fp[i])();
-					j++;
+			if(interval_count[i] != 0)
+			{
+				for(uint16_t j=0;j < interval_count[i];)
+				{ 
+					if(call_tick == 1)
+					{
+						call_tick =0;
+						(*tick_fp[i])();
+						j++;
+					}
+					//		volatile asm("sleep");
 				}
-				//		volatile asm("sleep");
+			}
+			else
+			{
+				uint8_t i  = 0;
+				while(i == 0)
+				{
+					if(call_tick == 1)
+					{
+						call_tick =0;
+						i = (*tick_fp[i])();
+					}
+					//		volatile asm("sleep");
+				}
 			}
 		}
 	}
@@ -342,7 +358,8 @@ void setLed(uint8_t led_nr,uint8_t brightness)
 
 void setLedXY(uint8_t x,uint8_t y, uint8_t brightness)
 {
-	if((x < 5)&&(y<6)&&(brightness < 4))
+	x = 3-x;
+	if((x < 4)&&(y<5)&&(brightness < 4))
 	{
 		if(brightness == 0)	leds_buf[y*4+x] = 0;
 		if(brightness == 1)	leds_buf[y*4+x] = 1;

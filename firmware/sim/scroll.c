@@ -113,14 +113,14 @@ const uint8_t text_len = 26;
 
 uint16_t pos = 0;
 
-void tick_scroll(void);
+uint8_t tick_scroll(void);
 
 void init_scroll(void)
 {
 	registerAnimation(tick_scroll,4,text_len*4);
 }
             
-void tick_scroll() {
+uint8_t tick_scroll() {
 	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {
@@ -137,6 +137,8 @@ void tick_scroll() {
 	}
 
 	if(pos++ == text_len << 2) pos = 0;
+	
+	return 0;
 }
 
 
