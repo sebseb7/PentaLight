@@ -30,13 +30,9 @@ static uint8_t sqrti(uint8_t x) {
 
 void plasma_tick(void);
 
-
 void init_plasma(void)
 {
-	void (*fp)(void);
-	fp=plasma_tick;
-	
-	registerAnimation(fp,2);
+	registerAnimation(plasma_tick,2);
 }
            
            

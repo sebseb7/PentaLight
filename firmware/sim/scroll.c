@@ -115,13 +115,9 @@ uint16_t pos = 0;
 
 void tick_scroll(void);
 
-
 void init_scroll(void)
 {
-    void (*fp)(void);
-	fp=tick_scroll;
-        
-	registerAnimation(fp,4);
+	registerAnimation(tick_scroll,4);
 }
             
 void tick_scroll() {

@@ -14,13 +14,9 @@ void init_random(void) __attribute__((constructor));
 
 void tick_random(void);
 
-
 void init_random(void)
 {
-    void (*fp)(void);
-	fp=tick_random;
-        
-	registerAnimation(fp,4);
+	registerAnimation(tick_random,4);
 }
             
 

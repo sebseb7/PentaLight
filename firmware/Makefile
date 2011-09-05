@@ -33,7 +33,7 @@ OPT = 2
 
 ##########################################################################################################
 # List C source files here. (C dependencies are automatically generated.)
-SRC	= main.c sim/random.c sim/test.c 
+SRC	= main.c sim/plasma.c 
 #SRC	= main.c timer.c lcd.c font8X6.c usart.c atparse.c gps.c gol.c
 ##########################################################################################################
 

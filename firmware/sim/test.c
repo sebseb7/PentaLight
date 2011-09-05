@@ -16,13 +16,9 @@ int8_t d = 1;
 
 void tick_test(void);
 
-
 void init_test(void)
 {
-    void (*fp)(void);
-	fp=tick_test;
-        
-	registerAnimation(fp,4);
+	registerAnimation(tick_test,4);
 }
             
 
