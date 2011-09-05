@@ -15,9 +15,6 @@ int interval;
 uint8_t (*tick_fp)(void);
 
 
-void setTickInterval(uint16_t t) {
-}
-
 void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 	assert(x < LED_WIDTH);
 	assert(y < LED_HEIGHT);
@@ -37,8 +34,6 @@ void registerAnimation(uint8_t (*fp)(void),uint16_t t,uint16_t ignore)
 
 
 int main(int argc, char *argv[]) {
-
-	setTickInterval(1);
 
 	SDL_Surface* screen = SDL_SetVideoMode(LED_WIDTH * ZOOM, LED_HEIGHT * ZOOM,
 		32, SDL_SWSURFACE | SDL_DOUBLEBUF);
