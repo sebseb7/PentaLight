@@ -30,7 +30,7 @@ void init_test(void)
 void tick_test() {
 	int8_t x;
 	// clear
-	for(x = 0; x < LED_WIDTH * LED_HEIGHT; x++) setLedXY(x & 3, x >> 2, 0);
+	for(x = 0; x < LED_WIDTH * LED_HEIGHT; x++) setLedXY(x & 3, x >> 2, 0); // < looks nice, but does not work when LED_WIDTH/HEIGHT changes
 
 	m += d;
 	if(m < 1 || m == LED_HEIGHT - 1) d = -d;
