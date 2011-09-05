@@ -259,9 +259,9 @@ int main(void)
                             DDRD |= (1<<PORTD2)|(1<<PORTD3)|(1<<PORTD4)|(1<<PORTD5)|(1<<PORTD6)|(1<<PORTD7);// d0 is RX, d1 is TX
                             
 
-	PORTB &= ~(PORTB0);
-                            
-
+    PORTC &= ~(1<<PORTC3);
+    
+	_delay_ms(500);
 
 /*	// Set baud rate
 	UART_BAUD_HIGH = (UART_CALC_BAUDRATE(BAUDRATE)>>8) & 0xFF;
@@ -274,7 +274,7 @@ int main(void)
 
 	UART_STATUS = ( 1<<UART_DOUBLE );
 	UART_BAUD_HIGH = 0;
-	UART_BAUD_LOW = 8;
+	UART_BAUD_LOW = 25;
 
 	UART_CTRL = UART_CTRL_DATA;
 	UART_CTRL2 = UART_CTRL2_DATA;
@@ -283,8 +283,10 @@ int main(void)
 
 		// jump to main app if pin is not grounded and GPIOR2 is zero
 		BLPORT &= ~(1<<BLPNUM);		// set to default		
+		PORTB &= ~(1<<PORTB0);
 		jump_to_app();			// Jump to application sector
 	}
+	PORTB &= ~(1<<PORTB6);
 	
 	if(GPIOR2 != 0)
     {
