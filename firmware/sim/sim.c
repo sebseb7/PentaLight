@@ -26,7 +26,7 @@ void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 
 
 
-int main() {
+int main(int argc, char *argv[]) {
 
 	setTickInterval(1);
 	init();
