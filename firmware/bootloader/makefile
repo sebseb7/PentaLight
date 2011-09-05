@@ -188,6 +188,7 @@ LDFLAGS += -Wl,--section-start=.text=$(MT_BOOTLOADER_ADDRESS)
 AVRDUDE_PROGRAMMER = stk500v2
 
 # com1 = serial port. Use lpt1 to connect to parallel port.
+#AVRDUDE_PORT = /dev/ttyUSB1    # programmer connected to serial device
 AVRDUDE_PORT = /dev/cu.SLAB_USBtoUART    # programmer connected to serial device
 #AVRDUDE_PORT = /dev/ttyS0    # programmer connected to serial device
 
