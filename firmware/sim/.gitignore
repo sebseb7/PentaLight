@@ -2,3 +2,6 @@ plasma
 test
 scroll
 random
+*.d
+*.lst
+*.o

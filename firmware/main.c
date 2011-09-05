@@ -23,8 +23,6 @@ uint16_t volatile off_period = 500;
 typedef void (*AppPtr_t)(void) __attribute__ ((noreturn));
 
 
-void tick(void);
-
 	uint8_t scroll_state = 0;
 
 
@@ -353,50 +351,4 @@ void scrollLeft()
 	}
 
 
-}
-
-void tick()
-{
-		scrollLeft();
-		
-		if(scroll_state == 0)
-		{
-			setLedXY(0,0,3);
-			setLedXY(0,1,1);
-			setLedXY(0,2,0);
-			setLedXY(0,3,1);
-			setLedXY(0,4,3);
-		}
-		if(scroll_state == 1)
-		{
-			setLedXY(0,0,1);
-			setLedXY(0,1,3);
-			setLedXY(0,2,1);
-			setLedXY(0,3,3);
-			setLedXY(0,4,1);
-		}
-
-		if(scroll_state == 2)
-		{
-			setLedXY(0,0,0);
-			setLedXY(0,1,1);
-			setLedXY(0,2,3);
-			setLedXY(0,3,1);
-			setLedXY(0,4,0);
-		}
-
-		if(scroll_state == 3)
-		{
-			setLedXY(0,0,1);
-			setLedXY(0,1,0);
-			setLedXY(0,2,1);
-			setLedXY(0,3,0);
-			setLedXY(0,4,1);
-		}
-	
-		scroll_state++;
-		if(scroll_state==4)
-		{	
-			scroll_state = 0;
-		}
 }
