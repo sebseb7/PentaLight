@@ -1,4 +1,4 @@
-#include "sim.h"
+#include "main.h"
 
 
 void init() {
@@ -7,7 +7,6 @@ void init() {
 
 
 int8_t m = 0;
-int8_t c = 0;
 int8_t d = 1;
 
 
