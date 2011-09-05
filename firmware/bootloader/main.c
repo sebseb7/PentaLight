@@ -27,7 +27,7 @@
  
 /* MCU frequency */
 #ifndef F_CPU
-#define F_CPU 1000000
+#define F_CPU 8000000
 #endif
 
 /* UART Baudrate */
@@ -249,6 +249,19 @@ int main(void)
 	BLDDR  &= ~(1<<BLPNUM);		// set as Input
 	BLPORT |= (1<<BLPNUM);		// Enable pullup
 
+    //enable LED channels as output
+        PORTB |= (1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2)|(1<<PORTB3)|(1<<PORTB4)|(1<<PORTB5)|(1<<PORTB6)|(1<<PORTB7);
+            PORTC |= (1<<PORTC0)|(1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3)|(1<<PORTC4);
+                PORTD |= (1<<PORTD2)|(1<<PORTD3)|(1<<PORTD4)|(1<<PORTD5)|(1<<PORTD6)|(1<<PORTD7);
+                
+                    DDRB |= (1<<PORTB0)|(1<<PORTB1)|(1<<PORTB2)|(1<<PORTB3)|(1<<PORTB4)|(1<<PORTB5)|(1<<PORTB6)|(1<<PORTB7);
+                        DDRC |= (1<<PORTC0)|(1<<PORTC1)|(1<<PORTC2)|(1<<PORTC3)|(1<<PORTC4);//C6 is reset, C5 is ADC, c7 is not avail
+                            DDRD |= (1<<PORTD2)|(1<<PORTD3)|(1<<PORTD4)|(1<<PORTD5)|(1<<PORTD6)|(1<<PORTD7);// d0 is RX, d1 is TX
+                            
+
+	PORTB &= ~(PORTB0);
+                            
+
 
 /*	// Set baud rate
 	UART_BAUD_HIGH = (UART_CALC_BAUDRATE(BAUDRATE)>>8) & 0xFF;
@@ -261,7 +274,7 @@ int main(void)
 
 	UART_STATUS = ( 1<<UART_DOUBLE );
 	UART_BAUD_HIGH = 0;
-	UART_BAUD_LOW = 0;
+	UART_BAUD_LOW = 8;
 
 	UART_CTRL = UART_CTRL_DATA;
 	UART_CTRL2 = UART_CTRL2_DATA;
