@@ -4,7 +4,8 @@
 #define LED_HEIGHT	5
 
 void setLedXY(uint8_t x, uint8_t y, uint8_t b);
-void setTickInterval(uint16_t t);
+
+void registerAnimation(void (*)(void),uint16_t);
 
 void init();
 void tick();

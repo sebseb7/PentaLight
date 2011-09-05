@@ -12,10 +12,10 @@
 
 int leds[LED_HEIGHT][LED_WIDTH];
 int interval;
+void (*tick_fp)(void);
+
 
 void setTickInterval(uint16_t t) {
-	assert(t > 0);
-	interval = 1000000 / (244 >> t);
 }
 
 void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
@@ -26,11 +26,19 @@ void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 }
 
 
+void registerAnimation(void (*fp)(void),uint16_t t)
+{
+    tick_fp = fp;
+    
+	assert(t > 0);
+	interval = 1000000 / (244 >> t);
+}
+    
+
 
 int main(int argc, char *argv[]) {
 
 	setTickInterval(1);
-	init();
 
 	SDL_Surface* screen = SDL_SetVideoMode(LED_WIDTH * ZOOM, LED_HEIGHT * ZOOM,
 		32, SDL_SWSURFACE | SDL_DOUBLEBUF);
@@ -49,7 +57,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		tick();
+		tick_fp();
 
 		const unsigned int color[] = {
 			0x000000, 0x7f0000, 0xcf0000, 0xff3f3f,

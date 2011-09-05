@@ -247,34 +247,13 @@ ISR (PCINT2_vect)
 	AppStartPtr();
 }
 
-void myinit(void) __attribute__ ((constructor, used));
+void (*tick_fp)(void);
 
-void myinit (void)
+void registerAnimation(void (*fp)(void),uint16_t tickInterval)
 {
-   	DDRB = 0;
+	tick_fp = fp;
 }
 
-void myinit2(void) __attribute__ ((constructor, used));
-
-void myinit2 (void)
-{
-   	DDRB = 0;
-}
-
-void code_init8(void) __attribute__ ((naked, used, section (".init8")));
-
-
-/* !!! never call this function !!! */
-
-void code_init8 (void)
-{
-   
-   	DDRB = 0;
-   	DDRB = 0;
-   /* Code */
-   
-}
-   
 
 int main (void)
 {
@@ -333,7 +312,7 @@ int main (void)
 		if(call_tick == 1)
 		{
 			call_tick =0;
-			tick();
+			tick_fp();
 		}
 		
 //		volatile asm("sleep");

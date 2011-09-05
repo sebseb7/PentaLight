@@ -33,7 +33,7 @@ OPT = 2
 
 ##########################################################################################################
 # List C source files here. (C dependencies are automatically generated.)
-SRC	= main.c font5x3.c
+SRC	= main.c plasma.c 
 #SRC	= main.c timer.c lcd.c font8X6.c usart.c atparse.c gps.c gol.c
 ##########################################################################################################
 

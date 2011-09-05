@@ -20,15 +20,22 @@ static uint8_t sqrti(uint8_t x) {
 	return table[x];
 }
 
-void init() {
-	setTickInterval(2);
+void plasma_tick(void);
+void init(void) __attribute__ ((naked, used, section (".init8")));
+void init(void)
+{
+	void (*fp)(void);
+	fp=plasma_tick;
+	
+	registerAnimation(fp,2);
 }
-
+           
+           
 
 int v1 = 0;
 int v2 = 0;
 
-void tick() {
+void plasma_tick() {
 
 	v1 += 3;
 	v2 += 5;
