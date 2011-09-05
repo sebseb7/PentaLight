@@ -27,19 +27,12 @@ static uint8_t sqrti(uint8_t x) {
 	return table[x];
 }
 
-uint8_t plasma_tick(void);
-
-void init_plasma(void)
-{
-	registerAnimation(plasma_tick,2,40);
-}
-           
-           
+uint8_t tick(void);
 
 int v1 = 0;
 int v2 = 0;
 
-uint8_t plasma_tick() {
+uint8_t tick() {
 
 	v1 += 3;
 	v2 += 5;
@@ -69,7 +62,7 @@ uint8_t plasma_tick() {
 
 
 void init_plasma(void) {
-	registerAnimation(tick, 2);
+	registerAnimation(tick, 2,40);
 }
            
            
