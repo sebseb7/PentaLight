@@ -1,12 +1,12 @@
-#include "sim.h"
+#include "main.h"
 
-static int sini(int x) {
-	static const int table[] = {
+static short sini(char x) {
+	static const char table[] = {
 	0, 6, 13, 19, 25, 31, 37, 43, 49, 55, 60, 66, 71, 76, 81, 86, 91, 95, 99,
 	103, 106, 110, 113, 116, 118, 121, 122, 124, 126, 127, 127, 128, 128 };
 	x = x & 127;
-	int i = x & 31;
-	int ret = (x & 32) ? table[32 - i] : table[i];
+	char i = x & 31;
+	short ret = (x & 32) ? table[32 - i] : table[i];
 	if(x & 64) ret = -ret;
 	return ret;
 }

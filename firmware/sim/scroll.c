@@ -1,4 +1,4 @@
-#include "sim.h"
+#include "main.h"
 const unsigned char font[][3] = {
 	{0x00,0x00,0x00}, //  
 	{0x00,0x1D,0x00}, // !
