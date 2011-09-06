@@ -32,7 +32,7 @@ uint8_t tick_test() {
 	if(m < 1 || m == LED_HEIGHT - 1) d = -d;
 
 	// draw row
-	for(x = 0; x < LED_WIDTH; x++) setLedXY(x, m, 3);
+	for(x = 0; x < LED_WIDTH; x++) setLedXY(x, m, 7);
 	
 	return 0;
 }

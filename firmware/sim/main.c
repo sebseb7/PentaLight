@@ -18,7 +18,7 @@ uint8_t (*tick_fp)(void);
 void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 	assert(x < LED_WIDTH);
 	assert(y < LED_HEIGHT);
-	assert(b < 4);
+	assert(b < 8);
 	leds[y][x] = b;
 }
 
@@ -55,7 +55,8 @@ int main(int argc, char *argv[]) {
 		tick_fp();
 
 		const unsigned int color[] = {
-			0x000000, 0x7f0000, 0xcf0000, 0xff3f3f,
+	//		 0x000000, 0x7f0000, 0xcf0000, 0xff3f3f,
+			0x000000, 0x240000, 0x480000,0x6c0000,0x900000,0xb40000,0xd90000, 0xff3f3f,
 		};
 		int x, y;
 		for(x = 0; x < LED_WIDTH; x++) {

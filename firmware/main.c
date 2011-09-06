@@ -182,7 +182,7 @@ ISR (TIMER1_OVF_vect)
 		return;
 		
 	}
-	else if((onstate == 1)||(onstate == 10)||(onstate == 70))
+	else if((onstate == 1)||(onstate == 2)||(onstate == 4)||(onstate == 8)||(onstate == 20)||(onstate == 40)||(onstate == 70))
 	{
 		if(onstate == leds[0]) LED_00_OFF;
 		if(onstate == leds[1]) LED_01_OFF;
@@ -310,6 +310,18 @@ int main (void)
 
 	sei();
 
+
+/*	setLedXY(0,0,0);
+	setLedXY(0,1,1);
+	setLedXY(0,2,2);
+	setLedXY(0,3,3);
+	setLedXY(0,4,4);
+	setLedXY(1,4,5);
+	setLedXY(2,4,6);
+	setLedXY(3,4,7);
+
+	while(1);*/
+
 	while(1)
 	{
 		for(uint8_t i =0;i < animations;i++)
@@ -347,24 +359,32 @@ int main (void)
 
 void setLed(uint8_t led_nr,uint8_t brightness)
 {
-	if((led_nr < 20)&&(brightness < 4))
+	if((led_nr < 20)&&(brightness < 8))
 	{
 		if(brightness == 0)	leds_buf[led_nr] = 0;
 		if(brightness == 1)	leds_buf[led_nr] = 1;
-		if(brightness == 2)	leds_buf[led_nr] = 10;
-		if(brightness == 3)	leds_buf[led_nr] = 70;
+		if(brightness == 2)	leds_buf[led_nr] = 2;
+		if(brightness == 3)	leds_buf[led_nr] = 4;
+		if(brightness == 4)	leds_buf[led_nr] = 8;
+		if(brightness == 5)	leds_buf[led_nr] = 20;
+		if(brightness == 6)	leds_buf[led_nr] = 40;
+		if(brightness == 7)	leds_buf[led_nr] = 70;
 	}
 }
 
 void setLedXY(uint8_t x,uint8_t y, uint8_t brightness)
 {
 	x = 3-x;
-	if((x < 4)&&(y<5)&&(brightness < 4))
+	if((x < 4)&&(y<5)&&(brightness < 8))
 	{
 		if(brightness == 0)	leds_buf[y*4+x] = 0;
 		if(brightness == 1)	leds_buf[y*4+x] = 1;
-		if(brightness == 2)	leds_buf[y*4+x] = 10;
-		if(brightness == 3)	leds_buf[y*4+x] = 70;
+		if(brightness == 2)	leds_buf[y*4+x] = 2;
+		if(brightness == 3)	leds_buf[y*4+x] = 4;
+		if(brightness == 4)	leds_buf[y*4+x] = 8;
+		if(brightness == 5)	leds_buf[y*4+x] = 20;
+		if(brightness == 6)	leds_buf[y*4+x] = 40;
+		if(brightness == 7)	leds_buf[y*4+x] = 70;
 	}
 }
 

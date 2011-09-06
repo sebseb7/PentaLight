@@ -123,7 +123,7 @@ static uint8_t tick() {
 		if((p & 3) < 3) bits = font[c - 32][p & 3];
 
 		for(y = 0; y < LED_HEIGHT; y++) {
-			setLedXY(x, y, 3 * (bits & 1));
+			setLedXY(x, y, 7 * (bits & 1));
 			bits >>= 1;
 		}
 	}

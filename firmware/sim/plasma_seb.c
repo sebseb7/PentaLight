@@ -35,7 +35,7 @@ uint8_t tick() {
 
 			uint16_t b = 2*sini((x+(a))*2) + 3*sini((y+(a))*3) + 10 * sini(a);
 
-			setLedXY(x, y, (b>>7)&3);
+			setLedXY(x, y, (b>>7)&7);
 
 		}
 	}

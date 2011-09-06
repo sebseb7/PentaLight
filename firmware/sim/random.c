@@ -26,7 +26,7 @@ uint8_t tick_random() {
 
 	for(x = 0; x < LED_WIDTH; x++) {
 		for(y = 0; y < LED_HEIGHT; y++) {
-			setLedXY(x, y, rand()&3);
+			setLedXY(x, y, rand()&7);
 		}
 	}
 }
