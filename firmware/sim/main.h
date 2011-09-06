@@ -3,7 +3,6 @@
 #define LED_WIDTH	4
 #define LED_HEIGHT	5
 
-void setLedXY(uint8_t x, uint8_t y, uint8_t b);
-
-void registerAnimation(uint8_t (*)(void), uint16_t,uint16_t);
+void setLedXY(uint8_t x, uint8_t y, uint8_t brightness);
+void registerAnimation(uint8_t (*fp)(void), uint16_t t, uint16_t duration);
 

@@ -107,20 +107,12 @@ const uint8_t font[][3] = {
 	{0x08,0x18,0x10}, // ~
 };
 
-char text[] = " Hi there, little bitches! ";
-//char text[] = " HI THERE, LITTLE BITCHES! ";
-const uint8_t text_len = 26;
+char text[] = " Hello, world! ";
+const uint8_t text_len = 15;
 
 uint16_t pos = 0;
 
-uint8_t tick_scroll(void);
-
-void init_scroll(void)
-{
-	registerAnimation(tick_scroll,4,text_len*4);
-}
-            
-uint8_t tick_scroll() {
+uint8_t tick() {
 	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {
@@ -135,10 +127,14 @@ uint8_t tick_scroll() {
 			bits >>= 1;
 		}
 	}
-
 	if(pos++ == text_len << 2) pos = 0;
 	
 	return 0;
+}
+
+
+void init_scroll(void) {
+	registerAnimation(tick, 4, text_len * 4);
 }
 
 
