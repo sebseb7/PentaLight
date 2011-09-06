@@ -12,7 +12,7 @@ void init_random(void) __attribute__((constructor));
 
 
 
-uint8_t tick_random(void);
+static uint8_t tick_random(void);
 
 void init_random(void)
 {
