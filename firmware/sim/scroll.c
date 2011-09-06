@@ -117,7 +117,7 @@ static uint8_t tick() {
 
 	for(x = 0; x < LED_WIDTH; x++) {
 		uint16_t p = pos + x;
-		char c = text[p >> 2];
+		char c = text[p / 4];
 
 		uint8_t bits = 0;
 		if((p & 3) < 3) bits = font[c - 32][p & 3];
@@ -127,7 +127,8 @@ static uint8_t tick() {
 			bits >>= 1;
 		}
 	}
-	if(pos++ == text_len << 2) pos = 0;
+	pos++;
+	if(pos + LED_WIDTH == text_len * 4) pos = 0;
 	
 	return 0;
 }
