@@ -46,7 +46,7 @@ uint8_t tick() {
 
 
 void init_plasma(void) {
-	registerAnimation(tick, 4,80);
+	registerAnimation(tick, 4,150);
 }
            
            
