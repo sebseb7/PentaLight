@@ -19,7 +19,7 @@ static int16_t sini(uint8_t x) {
 	return ret;
 }
 
-uint8_t tick(void);
+static uint8_t tick(void);
 
 int a = 0;
 

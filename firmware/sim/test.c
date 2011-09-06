@@ -14,7 +14,7 @@ int8_t m = 0;
 int8_t d = 1;
 
 
-uint8_t tick_test(void);
+static uint8_t tick_test(void);
 
 void init_test(void)
 {

@@ -112,7 +112,7 @@ const uint8_t text_len = 15;
 
 uint16_t pos = 0;
 
-uint8_t tick() {
+static uint8_t tick() {
 	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {
