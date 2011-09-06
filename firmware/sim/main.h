@@ -5,5 +5,5 @@
 
 void setLedXY(uint8_t x, uint8_t y, uint8_t b);
 
-void registerAnimation(uint8_t (*)(void), uint16_t);
+void registerAnimation(uint8_t (*)(void), uint16_t,uint16_t);
 
