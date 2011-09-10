@@ -1,16 +1,8 @@
 #include <stdlib.h>
 
-#if defined(__AVR__)
-#include "../main.h"
-void init_random(void) __attribute__ ((naked, used, section (".init8")));
-#warning compiling for AVR
-#else
-#include "main.h"
-void init_random(void) __attribute__((constructor));
-#warning compiling for SIM
-#endif
+#include <main.h>
 
-
+void init_random(void) ATTRIBUTES;
 
 static uint8_t tick_random(void);
 
