@@ -6,7 +6,7 @@
 #define LED_WIDTH   4
 #define LED_HEIGHT  5
 
-
+#define ATTRIBUTES	__attribute__ ((naked, used, section (".init8")));
 
 void setLed(uint8_t,uint8_t); 			// led_nr , brightness
 void setLedXY(uint8_t,uint8_t,uint8_t); // x , y , brightness
