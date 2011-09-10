@@ -33,7 +33,7 @@ OPT = 2
 
 ##########################################################################################################
 # List C source files here. (C dependencies are automatically generated.)
-SRC	= main.c apps/plasma_seb.c apps/test.c apps/random.c apps/scroll.c
+SRC	= main.c apps/plasma_seb.c apps/test.c apps/random.c apps/scroll.c apps/ball.c
 ##########################################################################################################
 
 
