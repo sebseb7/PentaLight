@@ -2,6 +2,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include <stdlib.h>
 
 #include "main.h"
 #include "leds.h"
@@ -50,6 +51,10 @@ ISR (TIMER0_OVF_vect)
 ISR(ADC_vect)
 {
 	uint16_t new_off_period = 500;
+
+	//improove randomness
+	srand(ADC);
+
 	if(ADC < 978)
 	{
 		uint16_t tmp = 978-ADC;
