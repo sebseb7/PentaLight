@@ -1,10 +1,20 @@
 UNAME := $(shell uname)
 
+SOURCES=$(wildcard ../apps/*.c)
+BINARIES=$(SOURCES:../apps/%.c=%)
 
-all:
 ifeq ($(UNAME), Darwin)
-	gcc main.c $(APP).c -o $(APP) -I/Library/Frameworks/SDL.framework/Headers SDLmain.m -framework SDL -framework Cocoa
+	FLAGS +=  -I/Library/Frameworks/SDL.framework/Headers SDLmain.m -framework SDL -framework Cocoa
 endif
+
 ifeq ($(UNAME), Linux)
-	gcc main.c $(APP).c -o $(APP) -lSDL
+	FLAGS +=  -lSDL
 endif
+
+all: $(BINARIES)
+
+clean:
+	rm -f ${BINARIES}
+
+%: ../apps/%.c main.c
+	gcc main.c $< -o $@ -I. $(FLAGS)

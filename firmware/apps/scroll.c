@@ -1,13 +1,6 @@
-#if defined(__AVR__)
-#include "../main.h"
-void init_scroll(void) __attribute__ ((naked, used, section (".init8")));
-#warning compiling for AVR
-#else
-#include "main.h"
-void init_scroll(void) __attribute__((constructor));
-#warning compiling for SIM
-#endif
+#include <main.h>
 
+void init_scroll(void) ATTRIBUTES;
 
 const uint8_t font[][3] = {
 	{0x00,0x00,0x00}, //  
