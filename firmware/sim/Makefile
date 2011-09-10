@@ -13,5 +13,8 @@ endif
 
 all: $(BINARIES)
 
+clean:
+	rm -f ${BINARIES}
+
 %: ../apps/%.c main.c
 	gcc main.c $< -o $@ -I. $(FLAGS)
