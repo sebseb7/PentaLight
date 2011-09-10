@@ -1,12 +1,6 @@
-#if defined(__AVR__)
-#include "../main.h"
-void init_plasma(void) __attribute__ ((naked, used, section (".init8")));
-#warning compiling for AVR
-#else
-#include "main.h"
-void init_plasma(void) __attribute__((constructor));
-#warning compiling for SIM
-#endif
+#include <main.h>
+
+void init_plasma(void) ATTRIBUTES;
 
 static int16_t sini(uint8_t x) {
 	static int16_t table[] = {

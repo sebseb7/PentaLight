@@ -1,14 +1,6 @@
-#if defined(__AVR__)
-#include "../main.h"
-void init_test(void) __attribute__ ((naked, used, section (".init8")));
-#warning compiling for AVR
-#else
-#include "main.h"
-void init_test(void) __attribute__((constructor));
-#warning compiling for SIM
-#endif
+#include <main.h>
 
-
+void init_test(void) ATTRIBUTES;
 
 int8_t m = 0;
 int8_t d = 1;
