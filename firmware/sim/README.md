@@ -1,7 +1,11 @@
 PentaLight Simulator
 ====================
 
-Assuming your code resides in `myapp.c`, compile with:
+Assuming your code resides in `apps/myapp.c`, compile with:
 
-	make APP=myapp
+	make myapp
+
+or simply compile all changed apps with
+
+	make
 
