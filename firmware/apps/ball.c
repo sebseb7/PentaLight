@@ -41,8 +41,6 @@ uint8_t tick_ball() {
 		{2, 5, 2},
 		};
 
-	printf("tick\n");
-
 	int8_t tx, ty;
 	for(tx = -2; tx <= 2; ++tx) {
 		for(ty = -2; ty <= 2; ++ty) {
