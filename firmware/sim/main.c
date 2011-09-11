@@ -7,13 +7,12 @@
 #include "main.h"
 
 
-#define ZOOM 20
+#define ZOOM 50
 
 
 int leds[LED_HEIGHT][LED_WIDTH];
 int interval;
-uint8_t (*tick_fp)(void);
-
+tick_fun tick_fp;
 
 void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 	assert(x < LED_WIDTH);
@@ -23,9 +22,9 @@ void setLedXY(uint8_t x, uint8_t y, uint8_t b) {
 }
 
 
-void registerAnimation(uint8_t (*fp)(void),uint16_t t,uint16_t ignore)
+void registerAnimation(tick_fun fp, uint16_t t, uint16_t ignore)
 {
-    tick_fp = fp;
+	tick_fp = fp;
     
 	assert(t > 0);
 	interval = 1000000 / (244 >> t);
