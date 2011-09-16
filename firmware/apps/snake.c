@@ -66,7 +66,14 @@ uint8_t tick_snake() {
 
 		++end;
 
-		return end > 9;
+		if(end > 9) {
+			length = 1;
+			new_apple();
+
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	// move
@@ -93,7 +100,6 @@ uint8_t tick_snake() {
 
 	if(collision(x, y)) {
 		end = 1;
-		return 0;
 	}
 
 	// save
