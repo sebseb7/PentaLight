@@ -20,9 +20,7 @@ int8_t apple[2];
 int8_t end = 0;
 
 static int8_t collision(const int8_t x, const int8_t y) {
-	int8_t i;
-
-	for(i = 0; i < length; ++i) {
+	for(int8_t i = 0; i < length; ++i) {
 		const int8_t cur = CYCLE(pointer - i * 2, ARRAY_SIZE(buffer));
 
 		if(buffer[cur] == x && buffer[cur + 1] == y) {
@@ -56,9 +54,7 @@ uint8_t tick_snake() {
 	// the end?
 
 	if(end) {
-		int8_t i;
-
-		for(i = 0; i < length; ++i) {
+		for(int8_t i = 0; i < length; ++i) {
 			const int8_t cur = CYCLE(pointer - i * 2, ARRAY_SIZE(buffer));
 
 			setLedXY(buffer[cur], buffer[cur + 1], (end % 3) * 2 + 1);

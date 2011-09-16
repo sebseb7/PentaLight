@@ -17,4 +17,4 @@ clean:
 	rm -f ${BINARIES}
 
 %: ../apps/%.c main.c main.h Makefile
-	gcc -Wall main.c $< -o $@ -I. $(FLAGS)
+	gcc --std=gnu99 -Wall main.c $< -o $@ -I. $(FLAGS)

@@ -13,7 +13,7 @@ int8_t x = 2, y = 2;
 int8_t dx = 1, dy = 1;
 
 void init_ball(void) {
-	registerAnimation(tick_ball, 6, 40);
+	registerAnimation(tick_ball, 5, 40);
 }
 
 uint8_t tick_ball() {
@@ -40,9 +40,8 @@ uint8_t tick_ball() {
 		{2, 5, 2},
 		};
 
-	int8_t tx, ty;
-	for(tx = -2; tx <= 2; ++tx) {
-		for(ty = -2; ty <= 2; ++ty) {
+	for(int8_t tx = -2; tx <= 2; ++tx) {
+		for(int8_t ty = -2; ty <= 2; ++ty) {
 			const int8_t ax = tx + x,
 			      ay = ty + y;
 
@@ -58,5 +57,6 @@ uint8_t tick_ball() {
 		}
 	}
 
+	return 0;
 }
 
