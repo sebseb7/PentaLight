@@ -19,8 +19,8 @@ int8_t length = 1;
 int8_t apple[2];
 int8_t end = 0;
 
-static int8_t collision(const int8_t x, const int8_t y) {
-	for(int8_t i = 0; i < length; ++i) {
+static int8_t collision(const int8_t x, const int8_t y, const int8_t off) {
+	for(int8_t i = off; i < length; ++i) {
 		const int8_t cur = CYCLE(pointer - i * 2, ARRAY_SIZE(buffer));
 
 		if(buffer[cur] == x && buffer[cur + 1] == y) {
@@ -36,7 +36,7 @@ static void new_apple() {
 		apple[0] = rand() % LED_WIDTH;
 		apple[1] = rand() % LED_HEIGHT;
 
-		if(!collision(apple[0], apple[1])) {
+		if(!collision(apple[0], apple[1], 0)) {
 			break;
 		}
 	}
@@ -92,17 +92,17 @@ uint8_t tick_snake() {
 	x = CYCLE(x, LED_WIDTH);
 	y = CYCLE(y, LED_HEIGHT);
 
-	// collision
-
-	if(collision(x, y)) {
-		end = 1;
-	}
-
 	// save
 
 	pointer = (pointer + 2) % ARRAY_SIZE(buffer);
 	buffer[pointer] = x;
 	buffer[pointer + 1] = y;
+
+	// collision
+
+	if(collision(x, y, 1)) {
+		end = 1;
+	}
 
 	// eaten?
 
