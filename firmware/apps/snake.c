@@ -54,10 +54,10 @@ uint8_t tick_snake() {
 	// the end?
 
 	if(end) {
-		for(int8_t i = 0; i < length; ++i) {
+		for(int8_t i = length - 1; i >= 0; --i) {
 			const int8_t cur = CYCLE(pointer - i * 2, ARRAY_SIZE(buffer));
 
-			setLedXY(buffer[cur], buffer[cur + 1], (end % 3) * 2 + 1);
+			setLedXY(buffer[cur], buffer[cur + 1], (end % 3) * 2 + (i == 0));
 		}
 
 		++end;
@@ -111,6 +111,11 @@ uint8_t tick_snake() {
 		new_apple();
 	}
 
+	// paint start of tail
+
+	const int8_t last = CYCLE(pointer - 2, ARRAY_SIZE(buffer));
+	setLedXY(buffer[last], buffer[last+1], 6);
+
 	// clear tail
 
 	const int8_t end = CYCLE(pointer - length * 2, ARRAY_SIZE(buffer));
@@ -120,7 +125,7 @@ uint8_t tick_snake() {
 
 	setLedXY(apple[0], apple[1], 2);
 
-	// paint front
+	// paint head
 
 	setLedXY(x, y, 7);
 
