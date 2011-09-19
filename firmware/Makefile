@@ -29,7 +29,7 @@ TARGET = pentalight
 
 # Optimization level, can be [0, 1, 2, 3, s]. 0 turns off optimization.
 # (Note: 3 is not always the best optimization level. See avr-libc FAQ.)
-OPT = 2
+OPT = s
 
 ##########################################################################################################
 # List C source files here. (C dependencies are automatically generated.)

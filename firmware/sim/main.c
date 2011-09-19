@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		tick_fp();
+		running &= !tick_fp();
 
 		const unsigned int color[] = {
 	//		 0x000000, 0x7f0000, 0xcf0000, 0xff3f3f,
