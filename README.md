@@ -8,4 +8,4 @@ We will give this as a DIY-Solder-Kit to children at our annual conference
 <iframe width="420" height="345" src="http://www.youtube.com/embed/7pHQiQaXwcs" frameborder="0" allowfullscreen></iframe>
 
 
-![pcb](raw/master/pcb.png)
+![pcb](PentaLight/raw/master/pcb.png)
