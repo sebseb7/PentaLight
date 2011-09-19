@@ -103,17 +103,17 @@ uint8_t tick_snake() {
 	buffer[pointer] = x;
 	buffer[pointer + 1] = y;
 
-	// collision
-
-	if(collision(x, y, 1)) {
-		end = 1;
-	}
-
 	// eaten?
 
 	if(apple[0] == x && apple[1] == y) {
 		++length;
 		new_apple();
+	}
+
+	// collision
+
+	if(collision(x, y, 1)) {
+		end = 1;
 	}
 
 	// paint start of tail
