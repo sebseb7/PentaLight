@@ -109,7 +109,12 @@ const uint8_t font[][3] = {
 	{0x08,0x18,0x10}, // ~
 };
 
-char text[] = " Hello, world! ";
+#ifdef __AVR__
+char text[] PROGMEM =" Hello, world! ";
+#else
+char text[] =" Hello, world! ";
+#endif
+
 const uint8_t text_len = 15;
 
 uint16_t pos = 0;
@@ -119,8 +124,11 @@ static uint8_t tick(void) {
 
 	for(x = 0; x < LED_WIDTH; x++) {
 		uint16_t p = pos + x;
+#ifdef __AVR__
+		char c = pgm_read_byte(&text[p / 4]);
+#else
 		char c = text[p / 4];
-
+#endif
 		uint8_t bits = 0;
 #ifdef __AVR__
 		if((p & 3) < 3) bits =  pgm_read_byte(&font[c - 32][p & 3]);
