@@ -1,8 +1,17 @@
 #include <main.h>
 
+#ifdef __AVR__
+#include <avr/pgmspace.h>
+#endif
+
+
 void init_scroll(void) ATTRIBUTES;
 
+#ifdef __AVR__
+const uint8_t font[][3] PROGMEM = {
+#else
 const uint8_t font[][3] = {
+#endif
 	{0x00,0x00,0x00}, //  
 	{0x00,0x1D,0x00}, // !
 	{0x18,0x00,0x18}, // "
@@ -113,7 +122,11 @@ static uint8_t tick(void) {
 		char c = text[p / 4];
 
 		uint8_t bits = 0;
-		if((p & 3) < 3) bits = font[c - 32][p & 3];
+#ifdef __AVR__
+		if((p & 3) < 3) bits =  pgm_read_byte(&font[c - 32][p & 3]);
+#else
+		if((p & 3) < 3) bits =  			   font[c - 32][p & 3];
+#endif
 
 		for(y = 0; y < LED_HEIGHT; y++) {
 			setLedXY(x, y, 7 * (bits & 1));
