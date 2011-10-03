@@ -1,7 +1,5 @@
 #include <main.h>
 
-void init_test(void) ATTRIBUTES;
-
 static const uint8_t leds[5][4] = {
 	{  1,  2,  3,  4 },
 	{ 14, 15, 16,  5 },
@@ -28,6 +26,8 @@ static uint8_t tick(void) {
 }
 
 
+
+static void init(void) ATTRIBUTES;
 void init_test(void) {
 	registerAnimation(tick, 3, 0x7f * 2);
 }
