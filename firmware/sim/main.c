@@ -28,7 +28,8 @@ void registerAnimation(tick_fun tick, uint16_t t, uint16_t ignore)
 	key_fp = NULL;
     
 	assert(t > 0);
-	interval = 1000000 / (244 >> t);
+	// 122Hz / tick
+	interval = 1000000 / 122 * t;
 }
     
 void registerApp(tick_fun tick, key_fun key, uint16_t t)
@@ -37,7 +38,7 @@ void registerApp(tick_fun tick, key_fun key, uint16_t t)
 	key_fp = key;
     
 	assert(t > 0);
-	interval = 1000000 / (244 >> t);
+	interval = 1000000 / 122 * t;
 }
 
 void key_emit(key_type key, SDL_EventType type) {
