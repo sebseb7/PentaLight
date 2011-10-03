@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <assert.h>
+#include <time.h>
 #include <SDL/SDL.h>
 
 #include "main.h"
@@ -58,6 +59,7 @@ void key_emit(key_type key, SDL_EventType type) {
 }
 
 int main(int argc, char *argv[]) {
+	srand(time(NULL));
 
 	SDL_Surface* screen = SDL_SetVideoMode(LED_WIDTH * ZOOM, LED_HEIGHT * ZOOM,
 		32, SDL_SWSURFACE | SDL_DOUBLEBUF);
