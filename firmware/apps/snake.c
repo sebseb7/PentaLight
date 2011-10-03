@@ -17,7 +17,7 @@ int8_t buffer[MAX_LENGTH * 2] = {1, 2, 2, 2};
 int8_t pointer = 2;
 int8_t length = 1;
 int8_t apple[2];
-int8_t end = 0;
+int8_t end = -1;
 
 static int8_t collision(const int8_t x, const int8_t y, const int8_t off) {
 	for(int8_t i = off; i < length; ++i) {
@@ -48,7 +48,6 @@ static void new_apple(void) {
 }
 
 void init_snake(void) {
-	new_apple();
 	registerApp(tick_snake, key_snake, 6);
 }
 
@@ -56,9 +55,16 @@ uint8_t tick_snake() {
 	int8_t x = buffer[pointer],
 	       y = buffer[pointer + 1];
 
+	// init?
+
+	if(end < 0) {
+		new_apple();
+		end = 0;
+	}
+
 	// the end?
 
-	if(end) {
+	if(end > 0) {
 		for(int8_t i = length - 1; i >= 0; --i) {
 			const int8_t cur = CYCLE(pointer - i * 2, ARRAY_SIZE(buffer));
 
@@ -68,9 +74,8 @@ uint8_t tick_snake() {
 		++end;
 
 		if(end > 9) {
-			end = 0;
+			end = -1;
 			length = 1;
-			new_apple();
 
 			return 1;
 		} else {
