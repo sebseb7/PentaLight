@@ -5,7 +5,7 @@
 #define CYCLE(x,c)		((x + c) % c)
 #define ARRAY_SIZE(array)	(sizeof(array) / sizeof(*array))
 
-#define MAX_LENGTH		(LED_WIDTH * LED_HEIGHT + 1)
+#define MAX_LENGTH		(LED_WIDTH * LED_HEIGHT)
 
 void init_snake(void) ATTRIBUTES;
 
@@ -32,6 +32,11 @@ static int8_t collision(const int8_t x, const int8_t y, const int8_t off) {
 }
 
 static void new_apple() {
+	if(length == LED_WIDTH * LED_HEIGHT) {
+		end = 1;
+		return;
+	}
+
 	for(;;) {
 		apple[0] = rand() % LED_WIDTH;
 		apple[1] = rand() % LED_HEIGHT;
@@ -98,17 +103,17 @@ uint8_t tick_snake() {
 	buffer[pointer] = x;
 	buffer[pointer + 1] = y;
 
-	// collision
-
-	if(collision(x, y, 1)) {
-		end = 1;
-	}
-
 	// eaten?
 
 	if(apple[0] == x && apple[1] == y) {
 		++length;
 		new_apple();
+	}
+
+	// collision
+
+	if(collision(x, y, 1)) {
+		end = 1;
 	}
 
 	// paint start of tail
