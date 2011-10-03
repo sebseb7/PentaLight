@@ -10,7 +10,7 @@ static uint8_t tick_test(void);
 
 void init_test(void)
 {
-	registerAnimation(tick_test,4,40);
+	registerAnimation(tick_test,16,40);
 }
             
 

@@ -8,7 +8,7 @@ static uint8_t tick_random(void);
 
 void init_random(void)
 {
-	registerAnimation(tick_random,4,60);
+	registerAnimation(tick_random,16,60);
 }
             
 

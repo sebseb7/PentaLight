@@ -11,12 +11,12 @@ void init_scroll(void) ATTRIBUTES;
 
 
 #ifdef __AVR__
-char text[] PROGMEM =" Cloudy mit Aussicht auf Datenspuren ";
+char text[] PROGMEM =" CLOUDY MIT AUSSICHT AUF DATENSPUREN ";
 #else
-char text[] =" Cloudy mit Aussicht auf Datenspuren ";
+char text[] =" CLOUDY MIT AUSSICHT AUF DATENSPUREN ";
 #endif
 
-const uint8_t text_len = 36;
+const uint8_t text_len = 37;
 
 uint16_t pos = 0;
 
@@ -50,7 +50,7 @@ static uint8_t tick(void) {
 
 
 void init_scroll(void) {
-	registerAnimation(tick, 5, text_len * 4);
+	registerAnimation(tick, 16, (text_len-1) * 4);
 }
 
 

@@ -1,6 +1,6 @@
 #include <main.h>
 
-void init_test(void) ATTRIBUTES;
+void init_helix(void) ATTRIBUTES;
 
 
 
@@ -13,7 +13,7 @@ static const uint8_t leds[5][4] = {
 };
 
 int8_t t = 0;
-int8_t d = 1;
+static int8_t d = 1;
 
 static uint8_t tick(void) {
 	int x, y;
@@ -32,8 +32,8 @@ static uint8_t tick(void) {
 }
 
 
-void init_test(void) {
-	registerAnimation(tick, 3, 0x7f * 2);
+void init_helix(void) {
+	registerAnimation(tick, 5, 0x7f * 2);
 }
 
 
