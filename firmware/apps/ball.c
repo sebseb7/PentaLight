@@ -13,7 +13,7 @@ int8_t x = 2, y = 2;
 int8_t dx = 1, dy = 1;
 
 void init_ball(void) {
-	registerAnimation(tick_ball, 5, 40);
+	registerAnimation(tick_ball, 5, 140);
 }
 
 uint8_t tick_ball() {

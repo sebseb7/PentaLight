@@ -16,8 +16,9 @@ uint8_t volatile timeout = 0;
 
 uint8_t adc_timeout = 0;
 uint8_t tick_timeout = 0;
-uint8_t volatile tick_interval = 18;
+uint8_t volatile tick_interval = 16;
 uint8_t volatile call_tick = 0;
+uint8_t volatile key_event = 0;
 
 uint16_t volatile off_period = 500;
 
@@ -240,26 +241,41 @@ ISR (TIMER1_OVF_vect)
 ISR (PCINT2_vect)
 {
 	// for now we jump to the bootloader when any button is pressed
-	GPIOR2=255;
+	key_event = 1;
+/*	GPIOR2=255;
 	PRR = 0;
 	AppPtr_t AppStartPtr = (AppPtr_t)0x1800;
-	AppStartPtr();
+	AppStartPtr();*/
 }
 
-uint8_t (*tick_fp[10])(void);
-uint16_t interval_count[10];
-uint16_t interval_duration[10];
+uint8_t (*appTick_fp[10])(void);
+void (*appKey_fp[10])(key_type,event_type);
+uint16_t appInterval_duration[10];
+
+uint8_t (*aniTick_fp[10])(void);
+uint16_t aniInterval_count[10];
+uint16_t aniInterval_duration[10];
 
 
 uint8_t animations = 0;
+uint8_t apps = 0;
 
 void registerAnimation(uint8_t (*fp)(void),uint16_t tickInterval, uint16_t intervals)
 {
-	tick_fp[animations] = fp;
-	interval_count[animations]=intervals;
-	interval_duration[animations]=tickInterval;
+	aniTick_fp[animations] = fp;
+	aniInterval_count[animations]=intervals;
+	aniInterval_duration[animations]=tickInterval;
 	
 	animations++;
+}
+
+void registerApp(uint8_t (*fp)(void),void (*key_fp)(key_type,event_type), uint16_t tickInterval)
+{
+	appTick_fp[apps] = fp;
+	appKey_fp[apps] = key_fp;
+	appInterval_duration[apps]=tickInterval;
+	
+	apps++;
 }
 
 
@@ -331,37 +347,124 @@ int main (void)
 
 	while(1);*/
 
+	uint8_t activeApp = 0; //0 == anim ; 1 == app1 ; 2 == app2
+	uint8_t current_animation = 0;
+	uint16_t current_ani_tick = 0;
+	uint16_t current_app_tick = 0;
+	uint8_t left_key = 0;
+	uint8_t right_key = 0;
+	
+	tick_interval = aniInterval_duration[current_animation];
+
+
 	while(1)
 	{
-		for(uint8_t i =0;i < animations;i++)
+		if(key_event == 1)
 		{
-			if(interval_count[i] != 0)
+			uint8_t current=0;
+			uint8_t same=0;
+			while(1)
 			{
-				for(uint16_t j=0;j < interval_count[i];)
-				{ 
-					if(call_tick == 1)
-					{
-						call_tick =0;
-						(*tick_fp[i])();
-						j++;
-					}
-					//		volatile asm("sleep");
+				if((PIND&3)==current)
+				{
+					same++;
+				}
+				else
+				{
+					same=0;
+					current = (PIND&3);
+				}
+				
+				if(same==30)
+				{
+					break;
+				}
+			}
+			if(activeApp==0)
+			{
+				if((apps>0)&&(current==1))
+				{
+					current_app_tick=0;
+					activeApp = 1;
+					tick_interval = appInterval_duration[0];
+					clearAllLeds();
+				}
+				if((apps>1)&&(current==2))
+				{
+					current_app_tick=0;
+					activeApp = 2;
+					tick_interval = appInterval_duration[1];
+					clearAllLeds();
 				}
 			}
 			else
 			{
-				uint8_t i  = 0;
-				while(i == 0)
+				key_type key;
+				event_type event;
+				if(((current&1)==1)&&(left_key == 0))
 				{
-					if(call_tick == 1)
+					left_key = 1;
+					key = KEY_B;
+					event = UP;
+					(*appKey_fp[activeApp-1])(key,event);
+				}else if(((current&1)==0)&&(left_key == 1))
+				{
+					left_key = 0;
+					key = KEY_B;
+					event = DOWN;
+					(*appKey_fp[activeApp-1])(key,event);
+				}
+
+
+				if(((current&2)==2)&&(right_key == 0))
+				{
+					right_key = 1;
+					key = KEY_A;
+					event = UP;
+					(*appKey_fp[activeApp-1])(key,event);
+				}else if(((current&2)==0)&&(right_key == 1))
+				{
+					right_key = 0;
+					key = KEY_A;
+					event = DOWN;
+					(*appKey_fp[activeApp-1])(key,event);
+				}
+				
+			}
+			key_event=0;
+		}
+
+		if(call_tick==1)
+		{
+			if(activeApp == 0)
+			{
+				if(current_ani_tick >= aniInterval_count[current_animation])
+				{
+					current_ani_tick=0;
+					current_animation++;
+					if(current_animation == animations)
 					{
-						call_tick =0;
-						i = (*tick_fp[i])();
+						current_animation = 0;
 					}
-					//		volatile asm("sleep");
+					tick_interval = aniInterval_duration[current_animation];
+				}
+			
+				(*aniTick_fp[current_animation])();
+
+				current_ani_tick++;
+			}
+			else
+			{
+				uint8_t retval = (*appTick_fp[activeApp-1])();
+				if(retval == 1)
+				{
+					activeApp = 0;
+					tick_interval = aniInterval_duration[current_animation];
 				}
 			}
+			call_tick=0;
 		}
+	
 	}
 }
 
@@ -380,6 +483,15 @@ void setLed(uint8_t led_nr,uint8_t brightness)
 		if(brightness == 7)	leds_buf[led_nr] = 70;
 	}
 }
+
+void clearAllLeds(void)
+{
+	for(uint8_t i = 0;i<20;i++)
+	{
+		leds_buf[i]=0;
+	}
+}
+
 
 void setLedXY(uint8_t x,uint8_t y, uint8_t brightness)
 {

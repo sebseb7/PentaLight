@@ -8,9 +8,22 @@
 
 #define ATTRIBUTES	__attribute__ ((naked, used, section (".init8")));
 
+typedef enum {
+	KEY_A,
+	KEY_B,
+} key_type;
+
+typedef enum {
+	DOWN,
+	UP,
+} event_type;
+
+
 void setLed(uint8_t,uint8_t); 			// led_nr , brightness
+void clearAllLeds(void);
 void setLedXY(uint8_t,uint8_t,uint8_t); // x , y , brightness
 void scrollLeft(void);
 void registerAnimation(uint8_t (*)(void),uint16_t,uint16_t);
+void registerApp(uint8_t (*)(void),void (*)(key_type,event_type),uint16_t);
 
 #endif
