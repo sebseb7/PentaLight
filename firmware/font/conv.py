@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-ZOOM = 4		# one font pixel corresponds to 4x4 pixels in the image
+ZOOM = 1		# one font pixel corresponds to 4x4 pixels in the image
 
 import sys
 import pygame
