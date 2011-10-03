@@ -68,6 +68,7 @@ uint8_t tick_snake() {
 		++end;
 
 		if(end > 9) {
+			end = 0;
 			length = 1;
 			new_apple();
 
