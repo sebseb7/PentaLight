@@ -7,6 +7,8 @@
 
 #define MAX_LENGTH		(LED_WIDTH * LED_HEIGHT)
 
+#define MAX_TICK		2
+
 void init_snake(void) ATTRIBUTES;
 
 static uint8_t tick_snake(void);
@@ -18,6 +20,7 @@ int8_t pointer = 2;
 int8_t length = 1;
 int8_t apple[2];
 int8_t end = -1;
+uint8_t tick = 0;
 
 static int8_t collision(const int8_t x, const int8_t y, const int8_t off) {
 	for(int8_t i = off; i < length; ++i) {
@@ -48,7 +51,7 @@ static void new_apple(void) {
 }
 
 void init_snake(void) {
-	registerApp(tick_snake, key_snake, 6);
+	registerApp(tick_snake, key_snake, 5);
 }
 
 uint8_t tick_snake() {
@@ -68,7 +71,7 @@ uint8_t tick_snake() {
 		for(int8_t i = length - 1; i >= 0; --i) {
 			const int8_t cur = CYCLE(pointer - i * 2, ARRAY_SIZE(buffer));
 
-			setLedXY(buffer[cur], buffer[cur + 1], (end % 3) * 2 + (i == 0));
+			setLedXY(buffer[cur], buffer[cur + 1], (end % 3) * 2 + (i == 0) * 3);
 		}
 
 		++end;
@@ -83,62 +86,70 @@ uint8_t tick_snake() {
 		}
 	}
 
-	// move
+	if(tick == 0) {
+		// move
 
-	switch(direction) {
-		case 0:
-			++x;
-			break;
-		case 1:
-			++y;
-			break;
-		case 2:
-			--x;
-			break;
-		case 3:
-			--y;
-			break;
+		switch(direction) {
+			case 0:
+				++x;
+				break;
+			case 1:
+				++y;
+				break;
+			case 2:
+				--x;
+				break;
+			case 3:
+				--y;
+				break;
+		}
+
+		x = CYCLE(x, LED_WIDTH);
+		y = CYCLE(y, LED_HEIGHT);
+
+		// save
+
+		pointer = (pointer + 2) % ARRAY_SIZE(buffer);
+		buffer[pointer] = x;
+		buffer[pointer + 1] = y;
+
+		// eaten?
+
+		if(apple[0] == x && apple[1] == y) {
+			++length;
+			new_apple();
+		}
+
+		// collision
+
+		if(collision(x, y, 1)) {
+			end = 1;
+		}
+
+		// paint start of tail
+
+		const int8_t last = CYCLE(pointer - 2, ARRAY_SIZE(buffer));
+		setLedXY(buffer[last], buffer[last+1], 3);
+
+		// clear tail
+
+		const int8_t end = CYCLE(pointer - length * 2, ARRAY_SIZE(buffer));
+		setLedXY(buffer[end], buffer[end + 1], 0);
+
+		// paint apple
+
+		setLedXY(apple[0], apple[1], MAX_TICK);
+
+		// paint head
+
+		setLedXY(x, y, 7);
+	} else {
+		setLedXY(apple[0], apple[1], tick);
 	}
 
-	x = CYCLE(x, LED_WIDTH);
-	y = CYCLE(y, LED_HEIGHT);
-
-	// save
-
-	pointer = (pointer + 2) % ARRAY_SIZE(buffer);
-	buffer[pointer] = x;
-	buffer[pointer + 1] = y;
-
-	// eaten?
-
-	if(apple[0] == x && apple[1] == y) {
-		++length;
-		new_apple();
+	if(++tick >= MAX_TICK) {
+		tick = 0;
 	}
-
-	// collision
-
-	if(collision(x, y, 1)) {
-		end = 1;
-	}
-
-	// paint start of tail
-
-	const int8_t last = CYCLE(pointer - 2, ARRAY_SIZE(buffer));
-	setLedXY(buffer[last], buffer[last+1], 6);
-
-	// clear tail
-
-	const int8_t end = CYCLE(pointer - length * 2, ARRAY_SIZE(buffer));
-	setLedXY(buffer[end], buffer[end + 1], 0);
-
-	// paint apple
-
-	setLedXY(apple[0], apple[1], 2);
-
-	// paint head
-
-	setLedXY(x, y, 7);
 
 	return 0;
 }
