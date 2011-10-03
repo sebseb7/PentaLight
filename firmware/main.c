@@ -279,18 +279,20 @@ int main (void)
 	//reduce power
 	PRR |= (1<<PRTWI)|(1<<PRTIM2)|(1<<PRSPI)|(1<<PRUSART0);
 
-	//disale input pin C5 (adc pin)
+	//disable input pin C5 (adc pin)
 	DIDR0 |= (1<<ADC5D);
 	
 	
 	//enable pullups for buttons
 	PORTD |= (1<<PORTD0)|(1<<PORTD1);
 	
-	//enable pcint
+	//enable pcint for buttons
 	PCMSK2 |= (1<<PCINT16)|(1<<PCINT17);
 	PCICR = (1<<PCIE2);
 
 
+	// Timer 1 ist used for application timing and ADC timing
+	
 	//set timer1 to FastPWM Mode & prescaler 1
 	TCCR1A |= (1<<WGM10)|(1<<WGM11);
 	TCCR1B |= (1<<WGM13)|(1<<WGM12)|(1<<CS10);
@@ -298,6 +300,8 @@ int main (void)
 	//enable interrupt
 	TIMSK1 |= (1<<TOIE1);
 
+	// Timer 0 ist used for LED PWM
+	
 	//set timer0 to normal Mode & prescaler 256 == 122Hz
 	TCCR0B |= (1<<CS02);
 	//enable interrupt
