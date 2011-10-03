@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <main.h>
 
 void init_plasma(void) ATTRIBUTES;
@@ -14,13 +15,6 @@ static int16_t sini(uint8_t x) {
 }
 static int16_t cosi(uint8_t x) { return sini(x + 32); }
 
-
-static uint8_t sqrti(uint8_t x) {
-	static const uint8_t table[32] = {
-		0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-		5, 5, 5, 5, 5, 5, 5 };
-	return table[x];
-}
                 
 static uint8_t tick(void);
 
@@ -48,7 +42,7 @@ uint8_t tick() {
 			uint16_t c = 5*sini(x*2+sini(a)) + 8*cosi(y*3+a+120) + 3*sini(b/2);
 			uint16_t d = 2*sini(x*2-b) + 3*cosi(y*3-cosi(a)) + 3*sini(a/4)+ c;
 
-			uint8_t col = ((cosi(d>>4)>>5))+(d>>6)&15;
+			uint8_t col = (((cosi(d>>4)>>5))+(d>>6))&15;
 			
 			if (col > 7) col = 15-col;
 

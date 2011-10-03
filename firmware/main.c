@@ -379,7 +379,6 @@ void setLed(uint8_t led_nr,uint8_t brightness)
 
 void setLedXY(uint8_t x,uint8_t y, uint8_t brightness)
 {
-	x = 3-x;
 	if((x < 4)&&(y<5)&&(brightness < 8))
 	{
 		if(brightness == 0)	leds_buf[y*4+x] = 0;

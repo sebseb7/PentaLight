@@ -21,4 +21,6 @@ uint8_t tick_random() {
 			setLedXY(x, y, rand()&7);
 		}
 	}
+	
+	return 0;
 }
