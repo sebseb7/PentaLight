@@ -250,8 +250,8 @@ int main(void)
 	BLPORT |= (1<<BLPNUM);		// Enable pullup
 
     //enable LED channels as output
-	PORTB |= (1<<PORTB0)|(1<<PORTB6)
-	PORTC |= (1<<PORTC3)
+	PORTB |= (1<<PORTB0)|(1<<PORTB6);
+	PORTC |= (1<<PORTC3);
                 
 	DDRB |= (1<<PORTB0)|(1<<PORTB6);
 	DDRC |= (1<<PORTC3);
