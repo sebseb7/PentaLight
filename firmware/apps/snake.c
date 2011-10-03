@@ -31,7 +31,7 @@ static int8_t collision(const int8_t x, const int8_t y, const int8_t off) {
 	return 0;
 }
 
-static void new_apple() {
+static void new_apple(void) {
 	if(length == LED_WIDTH * LED_HEIGHT) {
 		end = 1;
 		return;
@@ -49,7 +49,7 @@ static void new_apple() {
 
 void init_snake(void) {
 	new_apple();
-	registerApp(tick_snake, key_snake, 5);
+	registerApp(tick_snake, key_snake, 6);
 }
 
 uint8_t tick_snake() {
