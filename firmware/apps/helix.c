@@ -2,8 +2,6 @@
 
 void init_test(void) ATTRIBUTES;
 
-
-
 static const uint8_t leds[5][4] = {
 	{  1,  2,  3,  4 },
 	{ 14, 15, 16,  5 },
@@ -12,17 +10,15 @@ static const uint8_t leds[5][4] = {
 	{ 11, 10,  9,  8 },
 };
 
-int8_t t = 0;
-int8_t d = 1;
+static int8_t t = 0;
+static int8_t d = 1;
 
 static uint8_t tick(void) {
 	int x, y;
 
-
 	t++;
 	t &= 0x7f;
 	if(t == 0) d = -d;
-
 
 	for(x = 0; x < 4; x++)
 		for(y = 0; y < 5; y++)
