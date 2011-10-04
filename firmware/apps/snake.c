@@ -86,6 +86,8 @@ uint8_t tick_snake() {
 		}
 	}
 
+	// game step or animation?
+
 	if(tick == 0) {
 		// move
 
@@ -144,8 +146,11 @@ uint8_t tick_snake() {
 
 		setLedXY(x, y, 7);
 	} else {
+		// pulsing apple
 		setLedXY(apple[0], apple[1], tick);
 	}
+
+	// tick on
 
 	if(++tick >= MAX_TICK) {
 		tick = 0;
