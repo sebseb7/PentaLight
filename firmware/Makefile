@@ -33,7 +33,7 @@ OPT = s
 
 ##########################################################################################################
 # List C source files here. (C dependencies are automatically generated.)
-SRC	= main.c libs/font.c apps/plasma_seb.c apps/helix.c apps/test.c apps/random.c apps/scroll.c apps/ball.c apps/snake.c
+SRC	= main.c libs/font.c apps/scroll2.c apps/plasma_seb.c apps/helix.c apps/test.c apps/random.c apps/scroll.c apps/ball.c apps/snake.c
 ##########################################################################################################
 
 
