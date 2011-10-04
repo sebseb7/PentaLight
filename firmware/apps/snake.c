@@ -9,18 +9,18 @@
 
 #define MAX_TICK		2
 
-void init_snake(void) ATTRIBUTES;
+static void init_snake(void) ATTRIBUTES;
 
 static uint8_t tick_snake(void);
 static void key_snake(key_type key, event_type event);
 
-int8_t direction = 0;
-int8_t buffer[MAX_LENGTH * 2] = {1, 2, 2, 2};
-int8_t pointer = 2;
-int8_t length = 1;
-int8_t apple[2];
-int8_t end = -1;
-uint8_t tick = 0;
+static int8_t direction = 0;
+static int8_t buffer[MAX_LENGTH * 2] = {1, 2, 2, 2};
+static int8_t pointer = 2;
+static int8_t length = 1;
+static int8_t apple[2];
+static int8_t end = -1;
+static uint8_t tick = 0;
 
 static int8_t collision(const int8_t x, const int8_t y, const int8_t off) {
 	for(int8_t i = off; i < length; ++i) {
@@ -86,6 +86,8 @@ uint8_t tick_snake() {
 		}
 	}
 
+	// game step or animation?
+
 	if(tick == 0) {
 		// move
 
@@ -144,8 +146,11 @@ uint8_t tick_snake() {
 
 		setLedXY(x, y, 7);
 	} else {
+		// pulsing apple
 		setLedXY(apple[0], apple[1], tick);
 	}
+
+	// tick on
 
 	if(++tick >= MAX_TICK) {
 		tick = 0;
