@@ -38,7 +38,7 @@ static uint8_t tick2(void) {
 #endif
 
 		for(y = 0; y < LED_HEIGHT; y++) {
-			setLedXY(x, y, 7 * (bits & 1));
+			setLedXY(x, y, 7 - (7 * (bits & 1)));
 			bits >>= 1;
 		}
 	}
