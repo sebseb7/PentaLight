@@ -10,6 +10,8 @@
 uint16_t pwmState = 0;
 uint8_t leds[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 uint8_t volatile leds_buf[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+uint16_t volatile current_adc_value;
+
 
 uint8_t adc_timeout = 0;
 uint8_t tick_timeout = 0;
@@ -44,6 +46,8 @@ ISR (TIMER0_OVF_vect)
 ISR(ADC_vect)
 {
 	uint16_t new_off_period = 500;
+
+	current_adc_value = ADC;
 
 	//improove randomness
 	srand(ADC);

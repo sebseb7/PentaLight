@@ -12,6 +12,8 @@
 int leds[LED_HEIGHT][LED_WIDTH];
 int interval;
 
+uint16_t volatile current_adc_value = 900;
+
 tick_fun tick_fp;
 key_fun key_fp;
 

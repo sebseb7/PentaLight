@@ -10,6 +10,8 @@
 
 #define ATTRIBUTES	__attribute__((constructor));
 
+uint16_t volatile current_adc_value;
+
 typedef enum {
 	KEY_A,
 	KEY_B,
