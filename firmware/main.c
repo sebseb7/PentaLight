@@ -7,12 +7,9 @@
 #include "main.h"
 #include "leds.h"
 
-uint16_t onstate = 0;
-uint8_t  nextevent = 0;
+uint16_t pwmState = 0;
 uint8_t leds[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 uint8_t volatile leds_buf[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-uint8_t volatile timeout = 0;
 
 uint8_t adc_timeout = 0;
 uint8_t tick_timeout = 0;
@@ -24,18 +21,13 @@ uint16_t volatile off_period = 500;
 
 typedef void (*AppPtr_t)(void) __attribute__ ((noreturn));
 
-//0,1,2,5,12,26,58,127
-//0,1,2,4,8,16,32,64
-//0,1,1,1,2,3,3,5,7,9,13,17,24,33,46,63
-
 //122hz
 ISR (TIMER0_OVF_vect)
 {
-	if(timeout > 0) timeout--;
 	adc_timeout++;
 	tick_timeout++;
 	
-	// ~ every 2 seconds
+	// 0.47Hz == ~ every 2 seconds
 	if(adc_timeout == 0xff)
 	{
 		adc_timeout = 0;
@@ -67,101 +59,13 @@ ISR(ADC_vect)
 	}
 	off_period=new_off_period;
 	
-/*	
-	
-	if(ADCL & 1)
-	{
-		setLed(3,3);
-	}
-	else
-	{
-		setLed(3,0);
-	}
-	if(ADCL & 2)
-	{
-		setLed(7,3);
-	}
-	else
-	{
-		setLed(7,0);
-	}
-	if(ADCL & 4)
-	{
-		setLed(11,3);
-	}
-	else
-	{
-		setLed(11,0);
-	}
-	if(ADCL & 8)
-	{
-		setLed(10,3);
-	}
-	else
-	{
-		setLed(10,0);
-	}
-	if(ADCL & 16)
-	{
-		setLed(9,3);
-	}
-	else
-	{
-		setLed(9,0);
-	}
-	if(ADCL & 32)
-	{
-		setLed(8,3);
-	}
-	else
-	{
-		setLed(8,0);
-	}
-	if(ADCL & 64)
-	{
-		setLed(12,3);
-	}
-	else
-	{
-		setLed(12,0);
-	}
-	if(ADCL & 128)
-	{
-		setLed(16,3);
-	}
-	else
-	{
-		setLed(16,0);
-	}
-
-
-	if(ADCH & 1)
-	{
-		setLed(18,3);
-	}
-	else
-	{
-		setLed(18,0);
-	}
-
-	if(ADCH & 2)
-	{
-		setLed(19,3);
-	}
-	else
-	{
-		setLed(19,0);
-	}
-*/
 }
 
 
 //32khz
 ISR (TIMER1_OVF_vect)
 {
-//	LED_03_ON;
-
-	if(onstate == 0)
+	if(pwmState == 0)
 	{
 		if(leds[0] != 0) LED_00_ON;
 		if(leds[1] != 0) LED_01_ON;
@@ -184,49 +88,49 @@ ISR (TIMER1_OVF_vect)
 		if(leds[18] != 0) LED_18_ON;
 		if(leds[19] != 0) LED_19_ON;
 		
-		onstate = 1;
+		pwmState = 1;
 		return;
 		
 	}
-	else if((onstate == 1)||(onstate == 2)||(onstate == 4)||(onstate == 8)||(onstate == 20)||(onstate == 40)||(onstate == 70))
+	else if((pwmState == 1)||(pwmState == 2)||(pwmState == 4)||(pwmState == 8)||(pwmState == 20)||(pwmState == 40)||(pwmState == 70))
 	{
-		if(onstate == leds[0]) LED_00_OFF;
-		if(onstate == leds[1]) LED_01_OFF;
-		if(onstate == leds[2]) LED_02_OFF;
-		if(onstate == leds[3]) LED_03_OFF;
-		if(onstate == leds[4]) LED_04_OFF;
-		if(onstate == leds[5]) LED_05_OFF;
-		if(onstate == leds[6]) LED_06_OFF;
-		if(onstate == leds[7]) LED_07_OFF;
-		if(onstate == leds[8]) LED_08_OFF;
-		if(onstate == leds[9]) LED_09_OFF;
-		if(onstate == leds[10]) LED_10_OFF;
-		if(onstate == leds[11]) LED_11_OFF;
-		if(onstate == leds[12]) LED_12_OFF;
-		if(onstate == leds[13]) LED_13_OFF;
-		if(onstate == leds[14]) LED_14_OFF;
-		if(onstate == leds[15]) LED_15_OFF;
-		if(onstate == leds[16]) LED_16_OFF;
-		if(onstate == leds[17]) LED_17_OFF;
-		if(onstate == leds[18]) LED_18_OFF;
-		if(onstate == leds[19]) LED_19_OFF;
+		if(pwmState == leds[0]) LED_00_OFF;
+		if(pwmState == leds[1]) LED_01_OFF;
+		if(pwmState == leds[2]) LED_02_OFF;
+		if(pwmState == leds[3]) LED_03_OFF;
+		if(pwmState == leds[4]) LED_04_OFF;
+		if(pwmState == leds[5]) LED_05_OFF;
+		if(pwmState == leds[6]) LED_06_OFF;
+		if(pwmState == leds[7]) LED_07_OFF;
+		if(pwmState == leds[8]) LED_08_OFF;
+		if(pwmState == leds[9]) LED_09_OFF;
+		if(pwmState == leds[10]) LED_10_OFF;
+		if(pwmState == leds[11]) LED_11_OFF;
+		if(pwmState == leds[12]) LED_12_OFF;
+		if(pwmState == leds[13]) LED_13_OFF;
+		if(pwmState == leds[14]) LED_14_OFF;
+		if(pwmState == leds[15]) LED_15_OFF;
+		if(pwmState == leds[16]) LED_16_OFF;
+		if(pwmState == leds[17]) LED_17_OFF;
+		if(pwmState == leds[18]) LED_18_OFF;
+		if(pwmState == leds[19]) LED_19_OFF;
 
-		onstate++;
+		pwmState++;
 		return;
 
 	}
 
 
-	onstate++;
+	pwmState++;
 	
 
 //bad batteries : 64: 500hz
 
 //good batteries 1ff: 62hz
 
-	if(onstate > off_period)
+	if(pwmState > off_period)
 	{
-		onstate = 0;
+		pwmState = 0;
 
 		for(uint8_t i = 0;i<20;i++)
 		{
@@ -236,25 +140,27 @@ ISR (TIMER1_OVF_vect)
 	}
 	
 
-//	LED_03_OFF;
 }
 ISR (PCINT2_vect)
 {
-	// for now we jump to the bootloader when any button is pressed
 	key_event = 1;
+
 /*	GPIOR2=255;
 	PRR = 0;
 	AppPtr_t AppStartPtr = (AppPtr_t)0x1800;
 	AppStartPtr();*/
 }
 
-uint8_t (*appTick_fp[10])(void);
-void (*appKey_fp[10])(key_type,event_type);
-uint16_t appInterval_duration[10];
+#define MAX_NUMBER_OF_ANIMATIONS 10
+#define MAX_NUMBER_OF_APPS 2
 
-uint8_t (*aniTick_fp[10])(void);
-uint16_t aniInterval_count[10];
-uint16_t aniInterval_duration[10];
+uint8_t (*appTick_fp[MAX_NUMBER_OF_APPS])(void);
+void (*appKey_fp[MAX_NUMBER_OF_APPS])(key_type,event_type);
+uint16_t appInterval_duration[MAX_NUMBER_OF_APPS];
+
+uint8_t (*aniTick_fp[MAX_NUMBER_OF_ANIMATIONS])(void);
+uint16_t aniInterval_count[MAX_NUMBER_OF_ANIMATIONS];
+uint16_t aniInterval_duration[MAX_NUMBER_OF_ANIMATIONS];
 
 
 uint8_t animations = 0;
@@ -262,20 +168,26 @@ uint8_t apps = 0;
 
 void registerAnimation(uint8_t (*fp)(void),uint16_t tickInterval, uint16_t intervals)
 {
-	aniTick_fp[animations] = fp;
-	aniInterval_count[animations]=intervals;
-	aniInterval_duration[animations]=tickInterval;
+	if(animations < MAX_NUMBER_OF_ANIMATIONS)
+	{
+		aniTick_fp[animations] = fp;
+		aniInterval_count[animations]=intervals;
+		aniInterval_duration[animations]=tickInterval;
 	
-	animations++;
+		animations++;
+	}
 }
 
 void registerApp(uint8_t (*fp)(void),void (*key_fp)(key_type,event_type), uint16_t tickInterval)
 {
-	appTick_fp[apps] = fp;
-	appKey_fp[apps] = key_fp;
-	appInterval_duration[apps]=tickInterval;
+	if(apps < MAX_NUMBER_OF_APPS)
+	{
+		appTick_fp[apps] = fp;
+		appKey_fp[apps] = key_fp;
+		appInterval_duration[apps]=tickInterval;
 	
-	apps++;
+		apps++;
+	}
 }
 
 
@@ -316,6 +228,7 @@ int main (void)
 	//enable interrupt
 	TIMSK1 |= (1<<TOIE1);
 
+
 	// Timer 0 ist used for LED PWM
 	
 	//set timer0 to normal Mode & prescaler 256 == 122Hz
@@ -330,24 +243,12 @@ int main (void)
 	
 	
 
-//	SMCR = (1<<SE);
+	SMCR = (1<<SE);
 
 
 	sei();
 
-
-/*	setLedXY(0,0,0);
-	setLedXY(0,1,1);
-	setLedXY(0,2,2);
-	setLedXY(0,3,3);
-	setLedXY(0,4,4);
-	setLedXY(1,4,5);
-	setLedXY(2,4,6);
-	setLedXY(3,4,7);
-
-	while(1);*/
-
-	uint8_t activeApp = 0; //0 == anim ; 1 == app1 ; 2 == app2
+	uint8_t activeApp = 0; //0 == animation loop ; 1 == app1 ; 2 == app2
 	uint8_t current_animation = 0;
 	uint16_t current_ani_tick = 0;
 	uint16_t current_app_tick = 0;
@@ -361,6 +262,8 @@ int main (void)
 	{
 		if(key_event == 1)
 		{
+			
+			//as soon a we get the same reading 30 times in a row, we consider the pin debounced
 			uint8_t current=0;
 			uint8_t same=0;
 			while(1)
@@ -380,6 +283,9 @@ int main (void)
 					break;
 				}
 			}
+			
+			
+			
 			if(activeApp==0)
 			{
 				if((apps>0)&&(current==1))
@@ -464,7 +370,8 @@ int main (void)
 			}
 			call_tick=0;
 		}
-	
+		
+		asm volatile("sleep");
 	}
 }
 
