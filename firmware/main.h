@@ -8,6 +8,8 @@
 
 #define ATTRIBUTES	__attribute__ ((naked, used, section (".init8")));
 
+uint16_t volatile current_adc_value;
+
 typedef enum {
 	KEY_A,
 	KEY_B,
