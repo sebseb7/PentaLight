@@ -85,5 +85,5 @@ static uint8_t tick() {
 }
 
 static void init(void) ATTRIBUTES;
-void init(void) { registerAnimation(tick, 2, sizeof(logo) * 8 * 4); }
+void init(void) { registerAnimation(tick, 2, sizeof(logo) * 8); }
 
