@@ -5,6 +5,10 @@
 #define SHOT_SLOW	10
 #define SPEEDUP_SLOW	2
 
+#define EXPL_LEN	20
+
+#define ABS(x)		(x > 0 ? x : -x)
+
 struct player {
 	int8_t pos;
 	int8_t dir;
@@ -107,8 +111,6 @@ uint8_t tick(void) {
 
 			if(shot[0] >= 0) {
 				if(++shot_tick > SHOT_SLOW) {
-					printf("pre:  %ix%i\n", shot[0], shot[1]);
-
 					// clear projectile?
 					if(shot[1]) {
 						setLedXY(shot[0], shot[1], 0);
@@ -121,8 +123,6 @@ uint8_t tick(void) {
 					if(shot[1] < 0 || shot[1] >= LED_HEIGHT) {
 						shot[0] = -1;
 					} else {
-						printf("pre:  %ix%i\n", shot[0], shot[1]);
-
 						// paint projectile
 						setLedXY(shot[0], shot[1], 3);
 					}
@@ -133,9 +133,8 @@ uint8_t tick(void) {
 
 				// hit?
 				if(shot[1] == (p ? 0 : (LED_HEIGHT - 1)) && shot[0] == players[!p].pos) {
-					printf("%ix%i vs %i\n", shot[0], shot[1], players[!p].pos);
 					state = 1;
-					lost |= p + 1;
+					lost |= !p + 1;
 				}
 			}
 		}
@@ -143,12 +142,35 @@ uint8_t tick(void) {
 
 	// THE END
 	if(state > 0) {
-		if(state >= 20) {
-			state = 0;
-			return 1;
+		int8_t expand = state < EXPL_LEN ? state : (2 * EXPL_LEN - state);
+
+		for(uint8_t p = 0; p < 2; ++p) {
+			if((p + 1) & lost) {
+				for(uint8_t x = 0; x < LED_WIDTH; ++x) {
+					for(uint8_t y = 0; y < LED_HEIGHT; ++y) {
+						const int16_t dx = x - players[p].pos;
+						const int16_t dy = y - (p ? LED_HEIGHT - 1 : 0);
+
+						int16_t bright = (7 - (dx * dx + dy * dy)) * expand / EXPL_LEN;
+
+						if(bright >= 0) {
+							setLedXY(x, y, bright);
+						}
+					}
+				}
+			}
 		}
 
-		state++;
+		for(uint8_t p = 0; p < 2; ++p) {
+			setLedXY(players[p].pos, p ? LED_HEIGHT - 1 : 0, 7);
+		}
+
+		if(state >= EXPL_LEN * 2) {
+			state = -1;
+			return 1;
+		} else {
+			state++;
+		}
 	}
 
 	return 0;
