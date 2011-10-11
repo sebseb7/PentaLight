@@ -28,17 +28,17 @@ void registerAnimation(tick_fun tick, uint16_t t, uint16_t ignore)
 {
 	tick_fp = tick;
 	key_fp = NULL;
-    
+
 	assert(t > 0);
 	// 122Hz / tick
 	interval = 1000000 / 122 * t;
 }
-    
+
 void registerApp(tick_fun tick, key_fun key, uint16_t t)
 {
 	tick_fp = tick;
 	key_fp = key;
-    
+
 	assert(t > 0);
 	interval = 1000000 / 122 * t;
 }
@@ -76,10 +76,12 @@ int main(int argc, char *argv[]) {
 					running = 0;
 					break;
 
+                case 'd':
 				case SDLK_RIGHT:
 					key_emit(KEY_A, ev.type);
 					break;
 
+                case 'a':
 				case SDLK_LEFT:
 					key_emit(KEY_B, ev.type);
 					break;
