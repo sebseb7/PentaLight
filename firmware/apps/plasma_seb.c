@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <main.h>
 
-void init_plasma(void) ATTRIBUTES;
 
 static int16_t sini(uint8_t x) {
 	static int16_t table[] = {
@@ -15,27 +14,21 @@ static int16_t sini(uint8_t x) {
 }
 static int16_t cosi(uint8_t x) { return sini(x + 32); }
 
-                
-static uint8_t tick(void);
 
-int a = 0;
-int b = 0;
+static uint8_t tick() {
+	static int _a = 0;
+	static int b = 0;
+	static uint8_t init = 0;
 
-uint8_t init  = 0;
-
-uint8_t tick() {
-
-	if(init==0)
-	{
-		a = rand();
+	if(init == 0) {
+		_a = rand();
 		b = rand();
 		init = 1;
 	}
 
-	
-	uint8_t x,y;
-	
-	
+	int a = _a >> 1;
+
+	uint8_t x, y;
 	for(y = 0; y < LED_HEIGHT; y++) {
 		for(x = 0; x < LED_WIDTH; x++) {
 
@@ -44,21 +37,20 @@ uint8_t tick() {
 
 			uint8_t col = (((cosi(d>>4)>>5))+(d>>6))&15;
 			
-			if (col > 7) col = 15-col;
+			if(col > 7) col = 15 - col;
 
 			setLedXY(x, y, col);
-
 		}
 	}
-	a--;
-	b=cosi(a+(rand()&1));
+	_a--;
+	b = cosi(a);
 	return 0;
 	
 }
 
-
-void init_plasma(void) {
-	registerAnimation(tick, 16,150);
+static void init(void) ATTRIBUTES;
+void init(void) {
+	registerAnimation(tick, 6, 150);
 }
            
            

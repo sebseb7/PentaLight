@@ -33,7 +33,8 @@ OPT = s
 
 ##########################################################################################################
 # List C source files here. (C dependencies are automatically generated.)
-SRC	= main.c libs/font.c apps/battery.c apps/scroll2.c apps/plasma_seb.c apps/helix.c apps/test.c apps/random.c apps/scroll.c apps/ball.c apps/snake.c apps/strobe.c
+SRC	= main.c libs/font.c apps/cccdd.c apps/battery.c apps/scroll2.c apps/plasma_seb.c apps/helix.c apps/test.c apps/random.c apps/scroll.c apps/ball.c apps/snake.c apps/strobe.c
+#SRC	= main.c libs/font.c apps/cccdd.c
 ##########################################################################################################
 
 
@@ -146,7 +147,8 @@ AVRDUDE_WRITE_EEPROM = -U eeprom:w:$(TARGET).eep
 AVRDUDE_FLAGS = -p $(MCU) -F -P $(AVRDUDE_PORT) -c $(AVRDUDE_PROGRAMMER) -v -v 
 #AVRDUDE_UFLAGS = -p atmega88 -F -P /dev/ttyUSB0 -c avr109 -b 38400  -v -v 
 #AVRDUDE_UFLAGS = -p $(MCU) -P /dev/cu.usbserial-A2002QDi -c avr109 -b 230400  -v -v 
-AVRDUDE_UFLAGS = -p $(MCU) -F -P /dev/cu.usbserial-A700e5NG -c avr109 -b 38400  -v -v 
+#AVRDUDE_UFLAGS = -p $(MCU) -F -P /dev/cu.usbserial-A700e5NG -c avr109 -b 38400  -v -v 
+AVRDUDE_UFLAGS = -p $(MCU) -F -P /dev/ttyUSB0 -c avr109 -b 38400  -v -v 
 #AVRDUDE_FLAGS = -p $(MCU) -c $(AVRDUDE_PROGRAMMER)
 
 # Uncomment the following if you want avrdude's erase cycle counter.
