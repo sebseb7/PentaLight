@@ -86,10 +86,12 @@ uint8_t tick(void) {
 			}
 
 			// shooting?
-			if((key_state & (p + 1)) && (player->shot[0] == -1)) {
-				// place projectile
-				player->shot[1] = p ? (LED_HEIGHT - 1) : 0;
-				player->shot[0] = player->pos;
+			if(key_state & (p + 1)) {
+				if(player->shot[0] == -1) {
+					// place projectile
+					player->shot[1] = p ? (LED_HEIGHT - 1) : 0;
+					player->shot[0] = player->pos;
+				}
 
 				// slowdown
 				player->slow = MIN_SLOW;
