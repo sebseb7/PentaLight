@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-ZOOM = 1		# one font pixel corresponds to 4x4 pixels in the image
+ZOOM = 1
 
 import sys
 import pygame
@@ -14,7 +14,7 @@ for char in range(32, 128):
 		bits = 0
 		for y in range(5):
 			y = (char / 32 * 6 + y) * ZOOM
-			bits = bits * 2 + (img.get_at((x, y))[3] > 0)
+			bits = bits * 2 + (img.get_at((x, y))[0] == 0)
 		data.append("0x%02X" % bits)
 	print "{%s}, // '%c'" % (",".join(data), char)
 
