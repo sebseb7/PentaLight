@@ -51,7 +51,7 @@ static void new_apple(void) {
 }
 
 void init_snake(void) {
-	registerApp(tick_snake, key_snake, 22);
+	registerApp(tick_snake, key_snake, 17);
 }
 
 uint8_t tick_snake() {
