@@ -46,8 +46,6 @@ void init(void) {
 }
 
 uint8_t tick(void) {
-	puts("tick");
-
 	// INIT
 	if(state < 0) {
 		player[0] = 2;
@@ -66,7 +64,6 @@ uint8_t tick(void) {
 		setLedXY(player[0], player[1], 0);
 
 		if(!move(player)) {
-			puts("bump");
 			state = 1;
 		}
 
@@ -104,8 +101,6 @@ uint8_t tick(void) {
 		if(zombie_count < target_zombies) {
 			int8_t fits;
 			int8_t *zombie = zombies[free_zombie];
-
-			puts("spawning zombie");
 
 			zombie_set |= 1 << free_zombie;
 
