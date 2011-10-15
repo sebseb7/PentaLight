@@ -5,6 +5,7 @@
 #define MAX_ZOMBIES		4
 #define MAX_PROGRESS		70
 #define ZOMBIE_SLOW		2
+#define EXPL_LEN		6
 
 #define ABS(x)		(x > 0 ? x : -x)
 
@@ -139,8 +140,34 @@ uint8_t tick(void) {
 
 	// THE END
 	if(state > 0) {
-		state = -1;
-		return 1;
+		int8_t bright;
+
+		if(state < EXPL_LEN / 2) {
+			bright = state * 7 / (EXPL_LEN / 2);
+		} else {
+			bright = 7 - (state - (EXPL_LEN / 2)) * 7 / (EXPL_LEN / 2);
+		}
+
+		for(int8_t i = 0; i < 5; ++i) {
+			int8_t x = player[0],
+				y = player[1];
+
+			if(i < 2) {
+				x += i * 2 - 1;
+			} else if(i < 4) {
+				y += (i - 2) * 2 - 1;
+			}
+
+			if(x >= 0 && x < LED_WIDTH && y >= 0 && y < LED_HEIGHT) {
+				setLedXY(x, y, bright);
+			}
+		}
+
+		++state;
+
+		if(state > EXPL_LEN) {
+			return 1;
+		}
 	}
 
 	return 0;
