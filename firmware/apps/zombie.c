@@ -2,8 +2,8 @@
 
 #include <stdlib.h>
 
-#define MAX_ZOMBIES		5
-#define MAX_PROGRESS		100
+#define MAX_ZOMBIES		4
+#define MAX_PROGRESS		70
 #define ZOMBIE_SLOW		2
 
 #define ABS(x)		(x > 0 ? x : -x)
@@ -79,6 +79,10 @@ uint8_t tick(void) {
 				if(zombie_tick == 0) {
 					setLedXY(zombies[i][0], zombies[i][1], 0);
 
+					if(zombies[i][0] == player[0] && zombies[i][1] == player[1]) {
+						state = 1;
+					}
+
 					if(!move(zombies[i])) {
 						zombie_set &= ~bit;
 					} else {
@@ -124,7 +128,9 @@ uint8_t tick(void) {
 			setLedXY(zombie[0], zombie[1], 5);
 		}
 
-		setLedXY(player[0], player[1], 7);
+		if(state == 0) {
+			setLedXY(player[0], player[1], 7);
+		}
 
 		if(progress < MAX_PROGRESS) {
 			++progress;
