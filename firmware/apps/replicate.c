@@ -1,14 +1,13 @@
 #include <main.h>
 #include <stdlib.h>
 
-#define		CHAIN_LENGTH		128
+#define		MAX_CHAIN_LENGTH		128
 
 typedef enum { INIT, SHOW, LISTEN, QUIT } State;
 
 static State state = INIT;
-static uint8_t chain[CHAIN_LENGTH];
+static uint8_t chain[MAX_CHAIN_LENGTH];
 static uint8_t length = 3;
-static uint8_t level = 0;
 static uint8_t step = 0;
 static uint8_t sub_step = 0;
 
@@ -58,15 +57,19 @@ static void key(key_type key, event_type event) {
 	if(key == chain[step]) {
 		++step;
 		if(step == length) {
+
+			if(length == MAX_CHAIN_LENGTH)	// wow, you just beat the game!
+				goto DO_QUIT;				// cos I like goto
+
 			chain[step] = rand() & 1;
 			step = 0;
 			++length;
-			++level;
 			state = SHOW;
 		}
 	}
 	else {
-		// TODO: print level before exiting
+		DO_QUIT:
+		// TODO: print length before exiting
 		state = QUIT;
 	}
 }
