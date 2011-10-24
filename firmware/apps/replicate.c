@@ -1,7 +1,7 @@
 #include <main.h>
 #include <stdlib.h>
 
-#define		CHAIN_LENGTH		64
+#define		CHAIN_LENGTH		128
 
 typedef enum { INIT, SHOW, LISTEN, QUIT } State;
 
@@ -55,8 +55,6 @@ static void key(key_type key, event_type event) {
 	if(state != LISTEN || event != DOWN)
 		return;
 
-	printf("%d %d\n", key, event);
-
 	if(key == chain[step]) {
 		++step;
 		if(step == length) {
@@ -68,13 +66,14 @@ static void key(key_type key, event_type event) {
 		}
 	}
 	else {
+		// TODO: print level before exiting
 		state = QUIT;
 	}
 }
 
 static void init(void) ATTRIBUTES;
 void init(void) {
-	registerApp(tick, key, 10);
+	registerApp(tick, key, 7);
 }
 
 

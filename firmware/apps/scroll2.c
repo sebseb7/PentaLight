@@ -11,9 +11,9 @@ void init_scroll2(void) ATTRIBUTES;
 
 
 #ifdef __AVR__
-char text2[] PROGMEM =" <<</>> Pentalight ";
+char text2[] PROGMEM =" Pentalight ";
 #else
-char text2[] =" <<</>> Pentalight ";
+char text2[] =" Pentalight ";
 #endif
 
 const uint8_t text_len2 = 19;
