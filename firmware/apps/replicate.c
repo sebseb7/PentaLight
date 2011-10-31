@@ -69,8 +69,13 @@ static uint8_t tick() {
 		++sub_step;
 
 	}
+	
+	if(state == QUIT)
+	{
+		state == INIT;
+	}
 
-	return state == QUIT;
+	return state == INIT;
 }
 
 static void key(key_type key, event_type event) {
