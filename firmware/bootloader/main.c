@@ -61,6 +61,7 @@
  */
 #define EXIT_WDT_TIME   WDTO_250MS
 
+void __vector_default(void) { ; }
 
 /*
  * define the following if the bootloader should not output
@@ -87,9 +88,8 @@
 #include <avr/wdt.h>
 #include <avr/boot.h>
 #include <avr/pgmspace.h>
-#include <avr/eeprom.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
+//#include <avr/interrupt.h>
+//#include <util/delay.h>
 
 #include "chipdef.h"
 
@@ -156,20 +156,6 @@ static inline uint16_t writeFlashPage(uint16_t waddr, pagebuf_t size)
 	return baddr>>1;
 }
 
-static inline uint16_t writeEEpromPage(uint16_t address, pagebuf_t size)
-{
-	uint8_t *tmp = gBuffer;
-
-	do {
-		eeprom_write_byte( (uint8_t*)address, *tmp++ );
-		address++;			// Select next byte
-		size--;				// Decreas number of bytes to write
-	} while (size);				// Loop until all bytes written
-
-	// eeprom_busy_wait();
-
-	return address;
-}
 
 static inline uint16_t readFlashPage(uint16_t waddr, pagebuf_t size)
 {
@@ -206,16 +192,6 @@ static inline uint16_t readFlashPage(uint16_t waddr, pagebuf_t size)
 	return baddr>>1;
 }
 
-static inline uint16_t readEEpromPage(uint16_t address, pagebuf_t size)
-{
-	do {
-		sendchar( eeprom_read_byte( (uint8_t*)address ) );
-		address++;
-		size--;				// Decrease number of bytes to read
-	} while (size);				// Repeat until block has been read
-
-	return address;
-}
 
 
 static void send_boot(void)
@@ -234,14 +210,7 @@ static void (*jump_to_app)(void) = 0x0000;
 int main(void)
 {
 
-#ifdef WDT_OFF_SPECIAL
-#warning "using target specific watchdog_off"
     bootloader_wdt_off();
-#else
-	cli();
-	wdt_reset();
-	wdt_disable();
-#endif
 
 	uint16_t address = 0;
 	uint8_t device = 0, val;
@@ -249,26 +218,6 @@ int main(void)
 	BLDDR  &= ~(1<<BLPNUM);		// set as Input
 	BLPORT |= (1<<BLPNUM);		// Enable pullup
 
-    //enable LED channels as output
-	PORTB |= (1<<PORTB0)|(1<<PORTB6);
-	PORTC |= (1<<PORTC3);
-                
-	DDRB |= (1<<PORTB0)|(1<<PORTB6);
-	DDRC |= (1<<PORTC3);
-                            
-
-    PORTC &= ~(1<<PORTC3);
-    
-	_delay_ms(500);
-
-/*	// Set baud rate
-	UART_BAUD_HIGH = (UART_CALC_BAUDRATE(BAUDRATE)>>8) & 0xFF;
-	UART_BAUD_LOW = (UART_CALC_BAUDRATE(BAUDRATE) & 0xFF);
-
-#ifdef UART_DOUBLESPEED
-	UART_STATUS = ( 1<<UART_DOUBLE );
-#endif
-*/
 
 	UART_STATUS = ( 1<<UART_DOUBLE );
 	UART_BAUD_HIGH = 0;
@@ -277,18 +226,9 @@ int main(void)
 	UART_CTRL = UART_CTRL_DATA;
 	UART_CTRL2 = UART_CTRL2_DATA;
 
-	if ((BLPIN & (1<<BLPNUM)) && (GPIOR2 == 0) ) {
-
+	if (BLPIN & (1<<BLPNUM)) {
 		// jump to main app if pin is not grounded and GPIOR2 is zero
-		BLPORT &= ~(1<<BLPNUM);		// set to default		
-		PORTB &= ~(1<<PORTB0);
 		jump_to_app();			// Jump to application sector
-	}
-	PORTB &= ~(1<<PORTB6);
-	
-	if(GPIOR2 != 0)
-    {
-		GPIOR2=0;
 	}
                         
 
@@ -321,8 +261,6 @@ int main(void)
 			if (device == DEVTYPE) {
 				if (val == 'F') {
 					address = writeFlashPage(address, size);
-				} else if (val == 'E') {
-					address = writeEEpromPage(address, size);
 				}
 				sendchar('\r');
 			} else {
@@ -338,8 +276,6 @@ int main(void)
 
 			if (val == 'F') {
 				address = readFlashPage(address, size);
-			} else if (val == 'E') {
-				address = readEEpromPage(address, size);
 			}
 
 		// Chip erase

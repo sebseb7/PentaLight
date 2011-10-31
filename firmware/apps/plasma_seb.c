@@ -32,10 +32,12 @@ static uint8_t tick() {
 	for(y = 0; y < LED_HEIGHT; y++) {
 		for(x = 0; x < LED_WIDTH; x++) {
 
-			uint16_t c = 5*sini(x*2+sini(a)) + 8*cosi(y*3+a+120) + 3*sini(b/2);
-			uint16_t d = 2*sini(x*2-b) + 3*cosi(y*3-cosi(a)) + 3*sini(a/4)+ c;
+//			uint16_t c = 5*sini(x*2+sini(a)) + 8*cosi(y*3+a+120) + 3*sini(b/2);
+			//uint16_t d = 2*sini(x*2-b);// + 3*cosi(y*3-cosi(a));// + 3*sini(a/4);//+ c;
+			uint16_t d = 2*cosi(x*4-cosi(a/2))+ 3*cosi(y*3-cosi(a));// + 3*sini(a/4);//+ c;
 
-			uint8_t col = (((cosi(d>>4)>>5))+(d>>6))&15;
+//			uint8_t col = (((cosi(d>>4)>>5))+(d>>6))&15;
+			uint8_t col = ((d>>5))&15;
 			
 			if(col > 7) col = 15 - col;
 
@@ -43,7 +45,7 @@ static uint8_t tick() {
 		}
 	}
 	_a--;
-	b = cosi(a);
+	b = a;
 	return 0;
 	
 }

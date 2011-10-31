@@ -11,12 +11,14 @@ void init_scroll(void) ATTRIBUTES;
 
 
 #ifdef __AVR__
-char text[] PROGMEM =" CLOUDY MIT AUSSICHT AUF DATENSPUREN ";
+char text[] PROGMEM =" LEONA ";
+//char text[] PROGMEM =" CLOUDY MIT AUSSICHT AUF DATENSPUREN ";
 #else
 char text[] =" CLOUDY MIT AUSSICHT AUF DATENSPUREN ";
 #endif
 
-const uint8_t text_len = 37;
+const uint8_t text_len = 7;
+//const uint8_t text_len = 37;
 
 uint16_t pos = 0;
 

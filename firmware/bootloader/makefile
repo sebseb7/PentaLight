@@ -8,7 +8,7 @@ MCU_AVRDUDE = atmega88
 ##BOOTSIZE=512 #(will not fit)
 ##BOOTSIZE=1024
 ##BOOTSIZE=2048
-BOOTSIZE=1024
+BOOTSIZE=512
 
 
 
@@ -177,6 +177,8 @@ LDFLAGS += $(PRINTF_LIB) $(SCANF_LIB) $(MATH_LIB)
 # in bytes - not words) as defined above.
 LDFLAGS += -Wl,--section-start=.text=$(MT_BOOTLOADER_ADDRESS)
 
+BFD_MACH=avr5
+LDFLAGS += -T./$(BFD_MACH).x
 # Programming support using avrdude. Settings and variables.
 
 # Programming hardware: alf avr910 avrisp bascom bsd

@@ -7,7 +7,7 @@
 #define MIN(a,b)        ((a) > (b) ? (b) : (a))
 #define ARRAY_SIZE(array)	(sizeof(array) / sizeof(*array))
 
-#define PENALTY -1
+#define PENALTY -4
 
 static void init(void) ATTRIBUTES;
 static uint8_t tick(void);
@@ -24,7 +24,7 @@ static uint8_t end = 0;
 static uint8_t state = 0;
 
 void init(void) {
-	registerApp(tick, key, 22);
+	registerApp(tick, key, 42);
 }
 
 uint8_t tick() {
@@ -59,13 +59,13 @@ uint8_t tick() {
 void key(key_type key, event_type event) {
 	if(event == DOWN && end == 0) {
 		if(key == KEY_A) {
-		    right_bar = MAX(right_bar + (flash_light > 0 ? 1 : PENALTY), 0);
+		    right_bar = MAX(right_bar + (flash_light > 0 ? 4 : PENALTY), 0);
 			if (right_bar >= LED_HEIGHT * 7) winner = 1;
 		} else {
-			left_bar = MAX(left_bar + (flash_light > 0 ? 1 : PENALTY), 0);
+			left_bar = MAX(left_bar + (flash_light > 0 ? 4 : PENALTY), 0);
 		    if (left_bar >= LED_HEIGHT * 7) winner = 2;
 		}
-		if(winner > 0) end = 10;
+		if(winner > 0) end = 20;
 	}
 }
 

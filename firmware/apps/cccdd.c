@@ -1,6 +1,41 @@
 #include <main.h>
+#include "binary.h"
 
-static const uint8_t logo[] = {
+#define b00000 0
+#define b00001 1
+#define b00010 2
+#define b00011 3
+#define b00100 4
+#define b00101 5
+#define b00110 6
+#define b00111 7
+#define b01000 8
+#define b01001 9
+#define b01010 10
+#define b01011 11
+#define b01100 12
+#define b01101 13
+#define b01110 14
+#define b01111 15
+#define b10000 16
+#define b10001 17
+#define b10010 18
+#define b10011 19
+#define b10100 20
+#define b10101 21
+#define b10110 22
+#define b10111 23
+#define b11000 24
+#define b11001 25
+#define b11010 26
+#define b11011 27
+#define b11100 28
+#define b11101 29
+#define b11110 30
+#define b11111 31
+
+
+static uint8_t logo[] = {
 	0b00000,
 	0b00000,
 	0b00000,
@@ -43,7 +78,7 @@ static const uint8_t logo[] = {
 	0b00000,
 	0b00000,
 	0b00000,
-	0b00000,
+	0b00000
 };
 
 

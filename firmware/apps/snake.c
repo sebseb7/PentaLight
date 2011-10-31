@@ -51,7 +51,7 @@ static void new_apple(void) {
 }
 
 void init_snake(void) {
-	registerApp(tick_snake, key_snake, 17);
+	registerApp(tick_snake, key_snake, 32);
 }
 
 uint8_t tick_snake() {
@@ -131,7 +131,7 @@ uint8_t tick_snake() {
 		// paint start of tail
 
 		const int8_t last = CYCLE(pointer - 2, ARRAY_SIZE(buffer));
-		setLedXY(buffer[last], buffer[last+1], 3);
+		setLedXY(buffer[last], buffer[last+1], 5);
 
 		// clear tail
 
