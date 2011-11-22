@@ -3,7 +3,6 @@
 static void init_test(void) ATTRIBUTES;
 
 static int8_t d = 1;
-static int8_t e = 1;
 
 
 static uint8_t tick_test(void);
