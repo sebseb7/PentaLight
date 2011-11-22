@@ -72,7 +72,7 @@ static uint8_t tick() {
 	
 	if(state == QUIT)
 	{
-		state == INIT;
+		state = INIT;
 	}
 
 	return state == INIT;
