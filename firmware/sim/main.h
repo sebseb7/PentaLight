@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-#define LED_WIDTH	8
-#define LED_HEIGHT	8
+#define LED_WIDTH	4
+#define LED_HEIGHT	5
 
 #define SIMULATOR
 
