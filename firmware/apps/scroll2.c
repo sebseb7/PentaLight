@@ -16,7 +16,7 @@ char text2[] PROGMEM =" Pentalight ";
 char text2[] =" Pentalight ";
 #endif
 
-const uint8_t text_len2 = 19;
+const uint8_t text_len2 = 12;
 
 uint16_t pos2 = 0;
 
