@@ -6,6 +6,10 @@ BINARIES=$(SOURCES:../apps/%.c=%)
 LIB_SOURCES=$(wildcard ../libs/*.c)
 LIB_HEADERS=$(wildcard ../libs/*.h)
 
+LIB_SOURCES+= sdl_draw/SDL_draw.c
+LIB_HEADERS+= sdl_draw/SDL_draw.h
+
+
 FLAGS=--std=gnu99 -Wall
 
 ifeq ($(UNAME), Darwin)

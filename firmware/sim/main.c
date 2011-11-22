@@ -6,11 +6,13 @@
 #include <SDL/SDL.h>
 
 #include "main.h"
+#include "sdl_draw/SDL_draw.h"
 
 #define ZOOM 50
 
 int leds[LED_HEIGHT][LED_WIDTH];
 int interval;
+
 
 uint16_t volatile current_adc_value = 900;
 
@@ -67,6 +69,20 @@ int main(int argc, char *argv[]) {
 	SDL_Surface* screen = SDL_SetVideoMode(LED_WIDTH * ZOOM, LED_HEIGHT * ZOOM,
 		32, SDL_SWSURFACE | SDL_DOUBLEBUF);
 
+	SDL_Rect rect = { 0, 0, LED_WIDTH*ZOOM, LED_HEIGHT*ZOOM };
+	SDL_FillRect(screen, &rect, SDL_MapRGB(screen->format, 0x20,0x20,0x60));
+
+	unsigned int color[] = {
+		SDL_MapRGB(screen->format, 0x57,0x10,0x10),
+		SDL_MapRGB(screen->format, 0x6f,0x20,0x20),
+		SDL_MapRGB(screen->format, 0x87,0x30,0x30),
+		SDL_MapRGB(screen->format, 0x9f,0x40,0x40),
+		SDL_MapRGB(screen->format, 0xb7,0x50,0x50),
+		SDL_MapRGB(screen->format, 0xcf,0x60,0x60),
+		SDL_MapRGB(screen->format, 0xe7,0x70,0x70),
+		SDL_MapRGB(screen->format, 0xff,0x80,0x80)
+	};
+
 	int running = 1;
 	while(running) {
 		SDL_Event ev;
@@ -92,15 +108,10 @@ int main(int argc, char *argv[]) {
 
 		running &= !tick_fp();
 
-		const unsigned int color[] = {
-	//		 0x000000, 0x7f0000, 0xcf0000, 0xff3f3f,
-			0x000000, 0x240000, 0x480000,0x6c0000,0x900000,0xb40000,0xd90000, 0xff3f3f,
-		};
 		int x, y;
 		for(x = 0; x < LED_WIDTH; x++) {
 			for(y = 0; y < LED_HEIGHT; y++) {
-				SDL_Rect rect = { x * ZOOM, (LED_HEIGHT - y - 1) * ZOOM, ZOOM, ZOOM };
-				SDL_FillRect(screen, &rect, color[leds[y][x]]);
+				Draw_FillCircle(screen, ZOOM*x+(ZOOM/2),ZOOM*(LED_HEIGHT - y - 1)+(ZOOM/2), (ZOOM*0.4), color[leds[y][x]]);
 			}
 		}
 		SDL_Flip(screen);
