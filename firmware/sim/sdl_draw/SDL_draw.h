@@ -24,8 +24,8 @@
 #ifndef SDL_DRAW_H
 #define SDL_DRAW_H
 
-#include "SDL.h"
-#include "begin_code.h"
+#include "SDL/SDL.h"
+#include "SDL/begin_code.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -106,7 +106,7 @@ void (*Draw_FillRound)(SDL_Surface *super,
 } /* extern "C" */
 #endif
 
-#include "close_code.h"
+#include "SDL/close_code.h"
 
 #endif /* SDL_DRAW_H */
 
