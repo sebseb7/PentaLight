@@ -62,8 +62,11 @@ static uint8_t tick() {
 				uint16_t p = (sub_step / 4) + x;
 				char c = score[p / 4 % 5];
 				uint8_t bits = 0;
+#ifdef __AVR__
 				if((p & 3) < 3) bits = pgm_read_byte(&font[c - 32][p & 3]);
-
+#else
+				if((p & 3) < 3) bits =                font[c - 32][p & 3] ;
+#endif
 				for(y = 0; y < LED_HEIGHT; ++y) {
 					setLedXY(x, y, 7 * (bits & 1));
 					bits >>= 1;
