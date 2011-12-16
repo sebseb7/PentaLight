@@ -87,21 +87,29 @@ int main(int argc, char *argv[]) {
 	while(running) {
 		SDL_Event ev;
 		while(SDL_PollEvent(&ev)) {
-			switch(ev.key.keysym.sym) {
-				case SDLK_ESCAPE:
-					running = 0;
-					break;
+            switch(ev.type) {
+	            case SDL_QUIT:
+    	            running = 0;
+        	        break;
+            	case SDL_KEYUP:
+	            case SDL_KEYDOWN:
+					switch(ev.key.keysym.sym) {
+						case SDLK_ESCAPE:
+							running = 0;
+							break;
+	
+    		            case 'd':
+						case SDLK_RIGHT:
+							key_emit(KEY_A, ev.type);
+							break;
 
-                case 'd':
-				case SDLK_RIGHT:
-					key_emit(KEY_A, ev.type);
-					break;
+		                case 'a':
+						case SDLK_LEFT:
+							key_emit(KEY_B, ev.type);
+							break;
 
-                case 'a':
-				case SDLK_LEFT:
-					key_emit(KEY_B, ev.type);
-					break;
-
+						default: break;
+					}
 				default: break;
 			}
 		}
