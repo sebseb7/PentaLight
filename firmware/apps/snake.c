@@ -21,6 +21,7 @@ static int8_t length = 1;
 static int8_t apple[2];
 static int8_t end = -1;
 static uint8_t tick = 0;
+static uint8_t timeout = 0;
 
 static int8_t collision(const int8_t x, const int8_t y, const int8_t off) {
 	for(int8_t i = off; i < length; ++i) {
@@ -55,6 +56,12 @@ void init_snake(void) {
 }
 
 uint8_t tick_snake() {
+
+	timeout++;
+
+	if(timeout==100) return 1;
+
+
 	int8_t x = buffer[pointer],
 	       y = buffer[pointer + 1];
 
@@ -140,7 +147,7 @@ uint8_t tick_snake() {
 
 		// paint apple
 
-		setLedXY(apple[0], apple[1], MAX_TICK);
+		setLedXY(apple[0], apple[1], MAX_TICK*2);
 
 		// paint head
 
@@ -161,6 +168,8 @@ uint8_t tick_snake() {
 
 void key_snake(key_type key, event_type event) {
 	if(event == DOWN) {
+		timeout = 0;
+
 		if(key == KEY_A) {
 			--direction;
 		} else {
