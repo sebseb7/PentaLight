@@ -14,8 +14,13 @@ static uint8_t sub_step;
 
 static char score[5] = { ' ', ' ', '0', '0', '0' };
 
+
+static uint8_t timeout = 0;
+
 static uint8_t tick() {
 	uint8_t x, y;
+
+	timeout++;
 
 	switch(state) {
 		case INIT:
@@ -73,11 +78,20 @@ static uint8_t tick() {
 				}
 			}
 			++sub_step;
+			if(timeout == 150){
+				state = QUIT;
+			}
 			break;
 
 		case QUIT:
 			state = INIT;
 			return 1;
+		case LISTEN:
+			if(timeout == 200){
+				state = SCORE;
+				timeout = 0;
+			}
+			break;
 
 		default:
 			break;
@@ -87,6 +101,9 @@ static uint8_t tick() {
 
 static void key(key_type key, event_type event) {
 	if(event != DOWN) return;
+	
+	timeout=0;
+
 	if(state == SCORE) state = QUIT;
 	if(state != LISTEN) return;
 
