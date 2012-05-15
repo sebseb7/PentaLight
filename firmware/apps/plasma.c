@@ -15,7 +15,7 @@ static int16_t sini(uint8_t x) {
 static int16_t cosi(uint8_t x) { return sini(x + 32); }
 
 
-static uint8_t tick() {
+static uint8_t tick(void) {
 	static int _a = 0;
 	static int b = 0;
 	static uint8_t init = 0;

@@ -82,7 +82,7 @@ static uint8_t logo[] = {
 
 
 
-static uint8_t tick() {
+static uint8_t tick(void) {
 	static uint16_t t = 0;
 
 	// draw row

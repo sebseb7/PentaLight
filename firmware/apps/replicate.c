@@ -17,7 +17,7 @@ static char score[5] = { ' ', ' ', '0', '0', '0' };
 
 static uint8_t timeout = 0;
 
-static uint8_t tick() {
+static uint8_t tick(void) {
 	uint8_t x, y;
 
 	timeout++;
