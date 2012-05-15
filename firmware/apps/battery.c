@@ -16,7 +16,7 @@ static const uint8_t text_len2 = 6;
 
 static uint16_t pos2 = 0;
 
-static uint8_t tick2(void) {
+static uint8_t tick(void) {
 	uint8_t x, y;
 
 	if(pos2==0)
@@ -68,7 +68,7 @@ static uint8_t tick2(void) {
 
 
 void init_scroll2(void) {
-	registerAnimation(tick2, 16, (text_len2-1) * 4);
+	registerAnimation(tick, 16, (text_len2-1) * 4);
 }
 
 

@@ -7,29 +7,28 @@
 #include "../libs/font.h"
 
 
-void init_scroll(void) ATTRIBUTES;
+void init_scroll2(void) ATTRIBUTES;
 
 
 #ifdef __AVR__
-char text[] PROGMEM =" LEONA ";
-const uint8_t text_len = 7;
+char text2[] PROGMEM =" the Transistor ";
 #else
-char text[] =" CLOUDY MIT AUSSICHT AUF DATENSPUREN ";
-const uint8_t text_len = 37;
+char text2[] =" the Transistor ";
 #endif
 
+const uint8_t text_len2 = 16;
 
-uint16_t pos = 0;
+uint16_t pos2 = 0;
 
-static uint8_t tick(void) {
+static uint8_t tick2(void) {
 	uint8_t x, y;
 
 	for(x = 0; x < LED_WIDTH; x++) {
-		uint16_t p = pos + x;
+		uint16_t p = pos2 + x;
 #ifdef __AVR__
-		char c = pgm_read_byte(&text[p / 4]);
+		char c = pgm_read_byte(&text2[p / 4]);
 #else
-		char c = text[p / 4];
+		char c = text2[p / 4];
 #endif
 		uint8_t bits = 0;
 #ifdef __AVR__
@@ -43,15 +42,15 @@ static uint8_t tick(void) {
 			bits >>= 1;
 		}
 	}
-	pos++;
-	if(pos + LED_WIDTH == text_len * 4) pos = 0;
+	pos2++;
+	if(pos2 + LED_WIDTH == text_len2 * 4) pos2 = 0;
 	
 	return 0;
 }
 
 
-void init_scroll(void) {
-	registerAnimation(tick, 16, (text_len-1) * 4);
+void init_scroll2(void) {
+	registerAnimation(tick2, 16, (text_len2-1) * 4);
 }
 
 

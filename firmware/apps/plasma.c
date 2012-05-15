@@ -1,6 +1,6 @@
+#include <stdlib.h>
 #include <main.h>
 
-void init_plasma(void) ATTRIBUTES;
 
 static int16_t sini(uint8_t x) {
 	static int16_t table[] = {
@@ -14,49 +14,45 @@ static int16_t sini(uint8_t x) {
 }
 static int16_t cosi(uint8_t x) { return sini(x + 32); }
 
-static uint8_t sqrti(uint8_t x) {
-	static const uint8_t table[32] = {
-	0, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-	5, 5, 5, 5, 5, 5, 5 };
-	return table[x];
-}
 
-uint8_t tick(void);
+static uint8_t tick() {
+	static int _a = 0;
+	static int b = 0;
+	static uint8_t init = 0;
 
-int v1 = 0;
-int v2 = 0;
+	if(init == 0) {
+		_a = rand();
+		b = rand();
+		init = 1;
+	}
 
-uint8_t tick() {
+	int a = _a >> 1;
 
-	v1 += 3;
-	v2 += 5;
-
-	int rx = (cosi(v1 >> 2) >> 5) + 2;
-	int ry = (sini(v2 >> 2) >> 5) + 2;
-
-	int x, y;
+	uint8_t x, y;
 	for(y = 0; y < LED_HEIGHT; y++) {
 		for(x = 0; x < LED_WIDTH; x++) {
 
-			int dx = x - rx;
-			int dy = y - ry;
-			int d = sqrti(dx * dx + dy * dy);
+//			uint16_t c = 5*sini(x*2+sini(a)) + 8*cosi(y*3+a+120) + 3*sini(b/2);
+			//uint16_t d = 2*sini(x*2-b);// + 3*cosi(y*3-cosi(a));// + 3*sini(a/4);//+ c;
+			uint16_t d = 2*cosi(x*4-cosi(a/2))+ 3*cosi(y*3-cosi(a));// + 3*sini(a/4);//+ c;
 
-			int q = (	(sini(x * 8 + (v1)) +
-						sini(y * 8 + (v2)) +
-						sini(d << 5)) >> 2) + 128;
+//			uint8_t col = (((cosi(d>>4)>>5))+(d>>6))&15;
+			uint8_t col = ((d>>5))&15;
+			
+			if(col > 7) col = 15 - col;
 
-			int a = (q * 0xffff / 0x10000) >> 6;
-			setLedXY(x, y, a);
+			setLedXY(x, y, col);
 		}
 	}
+	_a--;
+	b = a;
 	return 0;
 	
 }
 
-
-void init_plasma(void) {
-	registerAnimation(tick, 2,40);
+static void init(void) ATTRIBUTES;
+void init(void) {
+	registerAnimation(tick, 6, 150);
 }
            
            

@@ -2,21 +2,21 @@
 
 #include <main.h>
 
-void init_ball(void) ATTRIBUTES;
+static void init_ball(void) ATTRIBUTES;
 
 static uint8_t tick_ball(void);
 
 // an extension to the bouncing box
 #define BOFF		-1
 
-int8_t x = 2, y = 2;
-int8_t dx = 1, dy = 1;
+static int8_t x = 2, y = 2;
+static int8_t dx = 1, dy = 1;
 
 void init_ball(void) {
 	registerAnimation(tick_ball, 5, 140);
 }
 
-uint8_t tick_ball() {
+static uint8_t tick_ball() {
 	// bounce
 
 	if(x == BOFF || x == LED_WIDTH - BOFF - 1) {
