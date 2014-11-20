@@ -8,4 +8,4 @@ We will give this as a DIY-Solder-Kit to children at our annual conference
 Here you can find a part-list: http://www.reichelt.de/?ACTION=20;AWKID=489835;PROVID=2084
 
 
-![pcb](PentaLight/raw/master/pcb.jpg)
+![pcb](https://raw.github.com/sebseb7/PentaLight/master/pcb.jpg)
