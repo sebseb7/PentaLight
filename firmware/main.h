@@ -3,7 +3,7 @@
 
 #include <inttypes.h>
 
-#define LED_WIDTH   4
+#define LED_WIDTH   7
 #define LED_HEIGHT  5
 
 #define ATTRIBUTES	__attribute__ ((naked, used, section (".init8")));

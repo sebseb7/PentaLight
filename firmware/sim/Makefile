@@ -12,13 +12,12 @@ LIB_HEADERS+= sdl_draw/SDL_draw.h
 
 FLAGS=--std=gnu99 -Wall
 
+#works with SDL installed with brew
 ifeq ($(UNAME), Darwin)
-	FLAGS +=  -I/Library/Frameworks/SDL.framework/Headers SDLmain.m -framework SDL -framework Cocoa
+	FLAGS +=  -I/usr/local/include/SDL SDLmain.m -framework Cocoa
 endif
 
-ifeq ($(UNAME), Linux)
-	FLAGS +=  -lSDL
-endif
+FLAGS +=  -lSDL
 
 all: $(BINARIES)
 
